@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* ─── Tokens ────────────────────────────────────────────────────────────────
+   Layout: one centered column; a hero that pairs who-he-is with a highlights
+   card, then sections that each open with a clear heading.
+   Palette: cool off-white page, white for the few raised surfaces, deep navy
+   text, one blue accent (links, rank badges, the "current" marker). */
+
+@theme {
+  --color-bg: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-fg: #0e1628;
+  --color-muted: #566176;
+  --color-line: #e2e6ee;
+  --color-accent: #2563eb;
+  --color-accent-soft: #e9efff;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-geist), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    background: var(--color-bg);
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1080px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-x {
+      padding-inline: 2rem;
+    }
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.35rem + 1.4vw, 2.375rem);
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+
+  .measure {
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Rank / status badge. Filled = result; outlined = still in progress. */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.25rem;
+    height: 1.75rem;
+    padding-inline: 0.625rem;
+    border-radius: 999px;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .badge-outline {
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px rgb(37 99 235 / 0.45);
+  }
+
+  .link {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-color: rgb(37 99 235 / 0.35);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color 0.2s ease;
+  }
+  .link:hover {
+    text-decoration-color: var(--color-accent);
+  }
+}
+
+/* Lightbox fade */
+dialog.lightbox[open] {
+  animation: fade-in 0.2s ease;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  dialog.lightbox[open] {
+    animation: none;
+  }
+}
