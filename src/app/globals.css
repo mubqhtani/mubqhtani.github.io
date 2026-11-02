@@ -14,12 +14,6 @@
   --color-line: #e2e6ee;
   --color-accent: #2563eb;
   --color-accent-soft: #e9efff;
-
-  /* Defenseathon timeline only, taken from the event's official graphic. */
-  --color-dfn-bg: #002e29;
-  --color-dfn-box: #02735e;
-  --color-dfn-accent: #16c082;
-  --color-dfn-date: #c9f5e2;
 }
 
 @theme inline {

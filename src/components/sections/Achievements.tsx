@@ -22,7 +22,7 @@ export function Achievements() {
           </div>
         )}
         {achievements.map(
-          (a) => a.timeline && <EventTimeline key={a.id} title={`${a.name} timeline`} steps={a.timeline} />,
+          (a) => a.timeline && <EventTimeline key={a.id} achievement={a} steps={a.timeline} />,
         )}
         <BlackHat />
       </div>
