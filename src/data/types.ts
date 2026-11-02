@@ -111,9 +111,7 @@ export type Certification = {
 export type SkillGroup = {
   id: string;
   title: string;
-  items?: string[];
-  /** Labeled rows, for a group big enough to need them. Shown full width. */
-  rows?: { label: string; items: string[] }[];
+  rows: { label: string; items: string[] }[];
 };
 
 export type Project = {
