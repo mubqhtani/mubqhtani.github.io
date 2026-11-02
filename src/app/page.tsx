@@ -7,11 +7,9 @@ import { Hero } from "@/components/sections/Hero";
 import { Learning } from "@/components/sections/Learning";
 import { Projects } from "@/components/sections/Projects";
 import { Skills } from "@/components/sections/Skills";
-import type { Command } from "@/components/ui/CommandMenu";
 import { achievements } from "@/data/achievements";
 import { certifications } from "@/data/certifications";
 import { profile } from "@/data/profile";
-import { projects } from "@/data/projects";
 import { nav, siteUrl } from "@/lib/site";
 
 export default function Page() {
@@ -32,18 +30,6 @@ export default function Page() {
     sameAs: profile.socials.filter((s) => s.href && s.id !== "email").map((s) => s.href),
   };
 
-  const email = profile.socials.find((s) => s.id === "email")?.handle;
-  const commands: Command[] = [
-    ...nav.map((n) => ({ id: n.id, label: n.label, kind: "jump" as const, value: n.id })),
-    ...(email ? [{ id: "copy-email", label: "Copy email address", kind: "copy" as const, value: email }] : []),
-    ...profile.socials
-      .filter((s) => s.href && s.id !== "email")
-      .map((s) => ({ id: s.id, label: s.label, kind: "open" as const, value: s.href as string })),
-    ...projects.flatMap((p) =>
-      p.links?.repo ? [{ id: p.id, label: `${p.title} source code`, kind: "open" as const, value: p.links.repo }] : [],
-    ),
-  ];
-
   return (
     <>
       <a
@@ -53,7 +39,7 @@ export default function Page() {
         Skip to content
       </a>
 
-      <Navbar wordmark={profile.shortName} items={nav} commands={commands} />
+      <Navbar wordmark={profile.shortName} items={nav} />
 
       <main id="main">
         <Hero />

@@ -16,7 +16,6 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
-    NEXT_PUBLIC_BUILD_DATE: new Date().toISOString().slice(0, 10),
   },
   turbopack: {
     rules: {
