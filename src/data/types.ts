@@ -43,6 +43,8 @@ export type TimelineStep = {
   /** ISO dates. Omit `end` for a single day. */
   start: string;
   end?: string;
+  /** Shown instead of the dates when only the years are known. */
+  dateLabel?: string;
 };
 
 export type Achievement = {
@@ -84,6 +86,8 @@ export type TimelineEntry = {
   start: string;
   /** ISO date, or "present". Omit for single-day events. */
   end?: string | "present";
+  /** Shown instead of the dates when only the years are known. */
+  dateLabel?: string;
   title: string;
   org?: string;
   body?: string;

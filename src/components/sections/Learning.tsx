@@ -9,6 +9,7 @@ import { StepLine } from "./EventLine";
 import { Section } from "./Section";
 
 function Dates({ entry }: { entry: TimelineEntry }) {
+  if (entry.dateLabel) return <>{entry.dateLabel}</>;
   return (
     <>
       <time dateTime={entry.start}>{formatDate(entry.start)}</time>

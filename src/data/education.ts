@@ -6,6 +6,18 @@ import type { TimelineEntry } from "./types";
  */
 export const timeline: TimelineEntry[] = [
   {
+    id: "high-school",
+    // Only the school years are confirmed; `start` feeds the "Since" note.
+    start: "2025-08-24",
+    dateLabel: "2025 – Present",
+    title: "Technical Talented High School",
+    steps: [
+      { id: "grade-10", title: "Grade 10", status: "done", start: "2025", dateLabel: "2025 – 2026" },
+      { id: "grade-11", title: "Grade 11 (Current)", status: "current", start: "2026", dateLabel: "2026 – 2027" },
+      { id: "grade-12", title: "Grade 12 (Upcoming)", status: "upcoming", start: "2027", dateLabel: "2027 – 2028" },
+    ],
+  },
+  {
     id: "tuwaiq-academy",
     start: "2025-08-24",
     end: "2026-06-25",

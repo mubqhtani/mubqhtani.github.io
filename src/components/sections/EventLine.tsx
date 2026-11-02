@@ -57,7 +57,7 @@ export function StepLine({ steps }: { steps: TimelineStep[] }) {
               {upcoming && <span className="sr-only"> (not reached yet)</span>}
             </span>
             <time dateTime={step.start} className="tabular block text-[13px] text-muted">
-              {formatDayRange(step.start, step.end, i === steps.length - 1)}
+              {step.dateLabel ?? formatDayRange(step.start, step.end, i === steps.length - 1)}
             </time>
           </li>
         );

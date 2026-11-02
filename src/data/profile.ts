@@ -44,6 +44,8 @@ export const profile = {
 
   goals: [
     "Reach the Black Hat Bug Bounty Jr. finals and compete for first place",
+    "Build national solutions that benefit Saudi Arabia",
+    "Contribute to Saudi Arabia's cybersecurity",
     "Build and publish meaningful software projects",
     "Go deeper in web application security and programming",
     "Keep learning AI and data science",
