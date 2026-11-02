@@ -1,34 +1,45 @@
-import { ArrowDown, CornerDownRight, CornerUpRight, Trophy } from "lucide-react";
-import type { Achievement, TimelineStep } from "@/data/types";
+import { ArrowDown, Check, CornerDownRight, CornerUpRight, Flag, Trophy } from "lucide-react";
+import type { TimelineStep } from "@/data/types";
 import { formatDate, formatRange } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
-function when(step: TimelineStep) {
-  return step.end ? formatRange(step.start, step.end) : formatDate(step.start);
+type EventTimelineProps = {
+  id: string;
+  title: string;
+  /** Rank or stage shown in the badge. */
+  badge: string;
+  /** Outlined badge = still in progress. */
+  ongoing?: boolean;
+  meta: string;
+  steps: TimelineStep[];
+  children?: React.ReactNode;
+};
+
+function StepIcon({ step, last }: { step: TimelineStep; last: boolean }) {
+  if (step.status === "done") return <Check className="size-4 shrink-0 text-accent" strokeWidth={2.5} aria-hidden />;
+  if (step.status === "won") return <Trophy className="size-4 shrink-0" aria-hidden />;
+  if (step.status === "current") return <span aria-hidden className="m-1 size-2 shrink-0 rounded-full bg-accent" />;
+  return last ? <Flag className="size-4 shrink-0" aria-hidden /> : null;
 }
 
 /**
- * A competition's timeline: boxes that step up and down with elbow arrows
- * between them, in a card that matches the Black Hat one. Stacks below 1024px.
+ * The timeline card used by every competition: boxes that step up and down
+ * with elbow arrows between them. Stacks below 1024px.
  */
-export function EventTimeline({ achievement: a, steps }: { achievement: Achievement; steps: TimelineStep[] }) {
-  const first = steps[0];
-  const last = steps[steps.length - 1];
-
+export function EventTimeline({ id, title, badge, ongoing, meta, steps, children }: EventTimelineProps) {
   return (
     <article
-      aria-labelledby={`${a.id}-timeline-title`}
-      className="rounded-2xl bg-surface p-6 ring-1 ring-line md:p-8"
+      id={id}
+      aria-labelledby={`${id}-timeline-title`}
+      className="scroll-mt-24 rounded-2xl bg-surface p-6 ring-1 ring-line md:p-8"
     >
       <div className="flex items-start gap-4">
-        <span className="badge mt-0.5">{a.rank}</span>
+        <span className={cn("badge mt-0.5", ongoing && "badge-outline")}>{badge}</span>
         <div className="min-w-0">
-          <h3 id={`${a.id}-timeline-title`} className="font-display text-xl font-semibold tracking-[-0.015em] md:text-2xl">
-            {a.name}
+          <h3 id={`${id}-timeline-title`} className="font-display text-xl font-semibold tracking-[-0.015em] md:text-2xl">
+            {title}
           </h3>
-          <p className="tabular mt-1 text-[15px] text-muted">
-            Timeline · {formatRange(first.start, last.end ?? last.start)}
-          </p>
+          <p className="tabular mt-1 text-[15px] text-muted">{meta}</p>
         </div>
       </div>
 
@@ -37,20 +48,38 @@ export function EventTimeline({ achievement: a, steps }: { achievement: Achievem
           const next = steps[i + 1];
           const top = i % 2 === 0;
           const Elbow = top ? CornerDownRight : CornerUpRight;
+          const highlighted = step.status === "current" || step.status === "won";
+          const upcoming = step.status === "upcoming";
           return (
             <li key={step.id} className="relative" style={{ gridColumn: i + 1, gridRow: top ? 1 : 2 }}>
               <div
                 className={cn(
                   "flex h-full flex-col justify-center rounded-xl px-4 py-3.5",
-                  step.won ? "bg-accent-soft" : "bg-bg ring-1 ring-line ring-inset",
+                  highlighted && "bg-accent-soft text-accent",
+                  step.status === "done" && "bg-bg ring-1 ring-line ring-inset",
+                  upcoming && "text-muted ring-1 ring-line ring-inset",
                 )}
               >
-                <p className={cn("flex items-center gap-1.5 font-medium leading-snug", step.won && "font-semibold text-accent")}>
-                  {step.won && <Trophy className="size-4 shrink-0" aria-hidden />}
-                  {step.title}
-                </p>
-                <p className={cn("tabular mt-1 text-sm", step.won ? "text-accent" : "text-muted")}>
-                  <time dateTime={step.start}>{when(step)}</time>
+                {step.label ? (
+                  <>
+                    <p className="flex items-center gap-1.5 text-sm font-medium">
+                      <StepIcon step={step} last={!next} />
+                      {step.label}
+                      {step.status === "current" && " · Now"}
+                      {upcoming && <span className="sr-only"> (not reached yet)</span>}
+                    </p>
+                    <p className="mt-1 font-medium leading-snug">{step.title}</p>
+                  </>
+                ) : (
+                  <p className={cn("flex items-center gap-1.5 font-medium leading-snug", highlighted && "font-semibold")}>
+                    <StepIcon step={step} last={!next} />
+                    {step.title}
+                  </p>
+                )}
+                <p className={cn("tabular mt-1 text-sm", !highlighted && "text-muted")}>
+                  <time dateTime={step.start}>
+                    {step.end ? formatRange(step.start, step.end) : formatDate(step.start)}
+                  </time>
                 </p>
               </div>
               {next && (
@@ -61,8 +90,9 @@ export function EventTimeline({ achievement: a, steps }: { achievement: Achievem
                   <span
                     aria-hidden
                     className={cn(
-                      "absolute inset-x-0 hidden h-full place-items-center text-accent lg:grid",
+                      "absolute inset-x-0 hidden h-full place-items-center lg:grid",
                       top ? "top-[calc(100%+0.75rem)]" : "bottom-[calc(100%+0.75rem)]",
+                      next.status === "upcoming" ? "text-muted" : "text-accent",
                     )}
                   >
                     <Elbow className="size-8" strokeWidth={1.25} />
@@ -73,6 +103,7 @@ export function EventTimeline({ achievement: a, steps }: { achievement: Achievem
           );
         })}
       </ol>
+      {children}
     </article>
   );
 }

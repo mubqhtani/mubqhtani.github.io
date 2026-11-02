@@ -80,8 +80,7 @@ mubarak-portfolio/
     │   ├── sections/Section.tsx   Shared wrapper: top hairline + section heading
     │   ├── sections/Hero.tsx      Name, role, intro, buttons, Highlights card
     │   ├── sections/Achievements.tsx  Photo entries + Black Hat progress card
-    │   ├── sections/Steps.tsx     Black Hat progress line
-    │   ├── sections/EventTimeline.tsx  Defenseathon timeline card: stepped boxes with elbow arrows, in the site's own colors (the owner liked the shape of the official graphic, not its colors)
+    │   ├── sections/EventTimeline.tsx  The one timeline card for every competition (Defenseathon and Black Hat must stay identical): stepped boxes with elbow arrows in the site's own colors
     │   ├── sections/About.tsx     Story paragraphs + "What's next" list
     │   ├── sections/Learning.tsx  Vertical timeline + PCEP certificate
     │   ├── sections/Skills.tsx    Grouped skill chips
@@ -188,7 +187,7 @@ Scale:
 
 ### 6.1 Page order
 1. **Hero** (`#top`) — "Riyadh, Saudi Arabia · Age 16", name, role ("Student developer and web security learner"), intro, buttons (View achievements / About me), **Highlights** card: Defenseathon 1st (SAR 25,000) · Future of Mobility Hackathon 1st (SAR 10,000) · Tuwaiq Challenges CTF 2nd (LEAP 2026 · Day 2) · Black Hat Bug Bounty Jr. Stage 3 (In progress) · PCEP (Jun 2026). Rows link to their entries. The card is **derived from the data files**, not typed separately.
-2. **Achievements** (`#achievements`) — Defenseathon (wide 16:9 photo), Future of Mobility + Tuwaiq CTF (side-by-side 4:5 photos), Defenseathon timeline card directly above Black Hat (Registration closed 2 Apr 2026, Satr platform 5–18 Apr, Tuwaiq camp 24 Apr – 2 May, Defenseathon challenge 3–5 May, Won 1st place 5 May), Black Hat card with a 5-stage progress line (horizontal on desktop, vertical on phones): Stage 1 Cybersecurity Fundamentals (14 Aug – 30 Sep 2026) ✓, Stage 2 Introduction to Cybersecurity (13–24 Sep) ✓, Stage 3 Introduction to Vulnerability Discovery (11 Oct – 5 Nov) = current, Stage 4 Competition Preparation Camp (22–30 Nov), Stage 5 Competition at Black Hat (1–3 Dec) = not reached. To advance, change `status` in `blackHat.milestones`; the badges follow automatically.
+2. **Achievements** (`#achievements`) — Defenseathon (wide 16:9 photo), Future of Mobility + Tuwaiq CTF (side-by-side 4:5 photos), Defenseathon timeline card directly above Black Hat (Registration closed 2 Apr 2026, Satr platform 5–18 Apr, Tuwaiq camp 24 Apr – 2 May, Defenseathon challenge 3–5 May, Won 1st place 5 May), Black Hat card, using the same timeline card as Defenseathon (stepped boxes on desktop, stacked below 1024px): Stage 1 Cybersecurity Fundamentals (14 Aug – 30 Sep 2026) ✓, Stage 2 Introduction to Cybersecurity (13–24 Sep) ✓, Stage 3 Introduction to Vulnerability Discovery (11 Oct – 5 Nov) = current, Stage 4 Competition Preparation Camp (22–30 Nov), Stage 5 Competition at Black Hat (1–3 Dec) = not reached. To advance, change `status` in `blackHat.steps`; the badges follow automatically.
 3. **About** (`#about`) — two short paragraphs + "What's next" (5 goals).
 4. **Learning** (`#learning`) — timeline: Tuwaiq Academy (24 Aug 2025 – 25 Jun 2026) → Project showcase at Tuwaiq Academy (20 Nov 2025, two photos) → PCEP (3 Jun 2026, with certificate image, ID and verify link) → Software development / engineering / data science (23 Aug 2026 – Present, marked "Now").
 5. **Skills** (`#skills`) — Security · Programming · Software · AI & data · Practice platforms, as chips.
@@ -202,7 +201,7 @@ Nav items are built in `src/lib/site.ts`; Projects/Contact links appear automati
 | File | Contents |
 |---|---|
 | `profile.ts` | Name, age, location, school, role line, intro, About paragraphs, goals, portrait slot, `socials` (email, X and Instagram have an `href`; GitHub and LinkedIn are hidden until they do), copyright year |
-| `achievements.ts` | `achievements[]` (order = display order; first is wide, next two side by side) and `blackHat` (milestones) |
+| `achievements.ts` | `achievements[]` (order = display order; first is wide, next two side by side) and `blackHat` (steps) |
 | `education.ts` | Learning timeline entries (`certificationId` links an entry to a certificate) |
 | `certifications.ts` | PCEP: code, title, issuer, date, image, `verifyUrl` (`https://verify.openedg.org/`), `credentialId` (`ZoPj.rFHx.mcwQ`, printed on the certificate) |
 | `skills.ts` | Skill groups (no levels/percentages by design) |

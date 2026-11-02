@@ -1,11 +1,15 @@
 import { Gallery, Photo } from "@/components/ui/Lightbox";
 import { achievements, blackHat } from "@/data/achievements";
-import type { Achievement } from "@/data/types";
+import type { Achievement, TimelineStep } from "@/data/types";
 import { resolveGallery, resolveMedia } from "@/lib/assets";
-import { formatSAR } from "@/lib/format";
+import { formatRange, formatSAR } from "@/lib/format";
 import { EventTimeline } from "./EventTimeline";
 import { Section } from "./Section";
-import { Steps } from "./Steps";
+
+function timelineDates(steps: TimelineStep[]) {
+  const last = steps[steps.length - 1];
+  return formatRange(steps[0].start, last.end ?? last.start);
+}
 
 export function Achievements() {
   const [first, ...rest] = achievements;
@@ -22,7 +26,17 @@ export function Achievements() {
           </div>
         )}
         {achievements.map(
-          (a) => a.timeline && <EventTimeline key={a.id} achievement={a} steps={a.timeline} />,
+          (a) =>
+            a.timeline && (
+              <EventTimeline
+                key={a.id}
+                id={`${a.id}-timeline`}
+                title={a.name}
+                badge={a.rank}
+                meta={timelineDates(a.timeline)}
+                steps={a.timeline}
+              />
+            ),
         )}
         <BlackHat />
       </div>
@@ -68,30 +82,17 @@ function Entry({ a, wide }: { a: Achievement; wide?: boolean }) {
 }
 
 function BlackHat() {
-  const { milestones } = blackHat;
-  const current = milestones.find((m) => m.status === "current");
-  const gallery = resolveGallery(blackHat.gallery);
-
+  const current = blackHat.steps.find((s) => s.status === "current");
   return (
-    <article
+    <EventTimeline
       id={blackHat.id}
-      aria-labelledby="black-hat-title"
-      className="scroll-mt-24 rounded-2xl bg-surface p-6 ring-1 ring-line md:p-8"
+      title={blackHat.name}
+      badge={current?.label ?? "Now"}
+      ongoing
+      meta={`${blackHat.location} · In progress`}
+      steps={blackHat.steps}
     >
-      <div className="flex items-start gap-4">
-        <span className="badge badge-outline mt-0.5">{current?.label}</span>
-        <div className="min-w-0">
-          <h3 id="black-hat-title" className="font-display text-xl font-semibold tracking-[-0.015em] md:text-2xl">
-            {blackHat.name}
-          </h3>
-          <p className="mt-1 text-[15px] text-muted">{blackHat.location} · In progress</p>
-        </div>
-      </div>
-
-      <div className="mt-8">
-        <Steps steps={milestones} />
-      </div>
-      <Gallery images={gallery} title="More photos" />
-    </article>
+      <Gallery images={resolveGallery(blackHat.gallery)} title="More photos" />
+    </EventTimeline>
   );
 }

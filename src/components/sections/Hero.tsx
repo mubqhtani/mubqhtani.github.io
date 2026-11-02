@@ -11,7 +11,7 @@ type Highlight = { href: string; badge: string; title: string; meta: string; ong
 
 /** The summary visitors see first; every row links to its full entry. */
 function getHighlights(): Highlight[] {
-  const current = blackHat.milestones.find((m) => m.status === "current");
+  const current = blackHat.steps.find((s) => s.status === "current");
   return [
     ...achievements.map((a) => ({
       href: `#${a.id}`,
@@ -21,7 +21,7 @@ function getHighlights(): Highlight[] {
       meta: a.prize ? formatSAR(a.prize.amount) : (a.context ?? ""),
     })),
     ...(current
-      ? [{ href: `#${blackHat.id}`, badge: current.label, title: blackHat.name, meta: "In progress", ongoing: true }]
+      ? [{ href: `#${blackHat.id}`, badge: current.label ?? "Now", title: blackHat.name, meta: "In progress", ongoing: true }]
       : []),
     ...certifications.map((c) => ({
       href: "#learning",

@@ -17,11 +17,11 @@ export const achievements: Achievement[] = [
     prize: { amount: 25000, currency: "SAR" },
     date: "2026-05-05",
     timeline: [
-      { id: "registration", title: "Registration closed", start: "2026-04-02" },
-      { id: "satr", title: "Satr platform (remote)", start: "2026-04-05", end: "2026-04-18" },
-      { id: "camp", title: "Tuwaiq camp (in person)", start: "2026-04-24", end: "2026-05-02" },
-      { id: "challenge", title: "Defenseathon challenge", start: "2026-05-03", end: "2026-05-05" },
-      { id: "win", title: "Won 1st place", start: "2026-05-05", won: true },
+      { id: "registration", title: "Registration closed", status: "done", start: "2026-04-02" },
+      { id: "satr", title: "Satr platform (remote)", status: "done", start: "2026-04-05", end: "2026-04-18" },
+      { id: "camp", title: "Tuwaiq camp (in person)", status: "done", start: "2026-04-24", end: "2026-05-02" },
+      { id: "challenge", title: "Defenseathon challenge", status: "done", start: "2026-05-03", end: "2026-05-05" },
+      { id: "win", title: "Won 1st place", status: "won", start: "2026-05-05" },
     ],
     image: {
       src: "/images/achievements/defenseathon/cover",
@@ -63,9 +63,9 @@ export const blackHat: BlackHatJourney = {
   name: "Black Hat Bug Bounty Jr.",
   location: "Malham, Riyadh",
   // Dates are the programme's published dates. Move `current` forward as stages are reached.
-  milestones: [
-    { id: "stage-1", label: "Stage 1", title: "Cybersecurity Fundamentals", status: "achieved", start: "2026-08-14", end: "2026-09-30" },
-    { id: "stage-2", label: "Stage 2", title: "Introduction to Cybersecurity", status: "achieved", start: "2026-09-13", end: "2026-09-24" },
+  steps: [
+    { id: "stage-1", label: "Stage 1", title: "Cybersecurity Fundamentals", status: "done", start: "2026-08-14", end: "2026-09-30" },
+    { id: "stage-2", label: "Stage 2", title: "Introduction to Cybersecurity", status: "done", start: "2026-09-13", end: "2026-09-24" },
     { id: "stage-3", label: "Stage 3", title: "Introduction to Vulnerability Discovery", status: "current", start: "2026-10-11", end: "2026-11-05" },
     { id: "stage-4", label: "Stage 4", title: "Competition Preparation Camp", status: "upcoming", start: "2026-11-22", end: "2026-11-30" },
     { id: "stage-5", label: "Stage 5", title: "Competition at Black Hat", status: "upcoming", start: "2026-12-01", end: "2026-12-03" },
