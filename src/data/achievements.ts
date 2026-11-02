@@ -41,7 +41,7 @@ export const achievements: Achievement[] = [
     rank: "2nd",
     placement: "2nd place",
     context: "LEAP 2026 · Day 2",
-    note: "A small CTF activity at LEAP. Two First Bloods, the most in the activity, and the Tuwaiq Challenges trophy.",
+    note: "Two first bloods",
     image: {
       src: "/images/achievements/tuwaiq-ctf-leap-2026/cover",
       alt: "Receiving the Tuwaiq Challenges trophy at LEAP 2026",
