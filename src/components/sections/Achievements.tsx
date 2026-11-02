@@ -3,6 +3,7 @@ import { achievements, blackHat } from "@/data/achievements";
 import type { Achievement } from "@/data/types";
 import { resolveGallery, resolveMedia } from "@/lib/assets";
 import { formatSAR } from "@/lib/format";
+import { EventTimeline } from "./EventTimeline";
 import { Section } from "./Section";
 import { Steps } from "./Steps";
 
@@ -19,6 +20,9 @@ export function Achievements() {
               <Entry key={a.id} a={a} />
             ))}
           </div>
+        )}
+        {achievements.map(
+          (a) => a.timeline && <EventTimeline key={a.id} title={`${a.name} timeline`} steps={a.timeline} />,
         )}
         <BlackHat />
       </div>
@@ -59,11 +63,6 @@ function Entry({ a, wide }: { a: Achievement; wide?: boolean }) {
           <Gallery images={gallery} title="More photos" />
         </div>
       </div>
-      {a.timeline && (
-        <div className="mt-6 rounded-2xl bg-surface p-6 ring-1 ring-line md:p-8">
-          <Steps steps={a.timeline} />
-        </div>
-      )}
     </article>
   );
 }

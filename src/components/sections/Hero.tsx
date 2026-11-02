@@ -21,7 +21,7 @@ function getHighlights(): Highlight[] {
       meta: a.prize ? formatSAR(a.prize.amount) : (a.context ?? ""),
     })),
     ...(current
-      ? [{ href: `#${blackHat.id}`, badge: current.label ?? "Now", title: blackHat.name, meta: "In progress", ongoing: true }]
+      ? [{ href: `#${blackHat.id}`, badge: current.label, title: blackHat.name, meta: "In progress", ongoing: true }]
       : []),
     ...certifications.map((c) => ({
       href: "#learning",

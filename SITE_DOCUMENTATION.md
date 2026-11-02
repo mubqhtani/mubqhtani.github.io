@@ -80,7 +80,8 @@ mubarak-portfolio/
     │   ├── sections/Section.tsx   Shared wrapper: top hairline + section heading
     │   ├── sections/Hero.tsx      Name, role, intro, buttons, Highlights card
     │   ├── sections/Achievements.tsx  Photo entries + Black Hat progress card
-    │   ├── sections/Steps.tsx     Shared progress line (Black Hat stages, Defenseathon timeline)
+    │   ├── sections/Steps.tsx     Black Hat progress line
+    │   ├── sections/EventTimeline.tsx  Defenseathon timeline panel (stepped boxes and arrows, modeled on the official graphic)
     │   ├── sections/About.tsx     Story paragraphs + "What's next" list
     │   ├── sections/Learning.tsx  Vertical timeline + PCEP certificate
     │   ├── sections/Skills.tsx    Grouped skill chips
@@ -144,6 +145,8 @@ Tailwind v4 turns each `--color-*` token into utilities (`bg-bg`, `text-muted`, 
 | `--color-accent` | `#2563eb` | Links, badge text, "current" markers, button hover |
 | `--color-accent-soft` | `#e9efff` | Badge fill, selection, current-step halo |
 
+Defenseathon timeline only: `--color-dfn-bg` `#002e29`, `--color-dfn-box` `#02735e`, `--color-dfn-accent` `#16c082` (all sampled from the official graphic) and `--color-dfn-date` `#c9f5e2` (lightened from the graphic so dates stay readable). This is a deliberate exception to the single accent color, requested by the owner.
+
 Other literal colors (keep in mind when theming):
 - Lightbox viewer is always dark: `bg-[#0b1120]/95`, `text-white`, `text-slate-400` (`ui/Lightbox.tsx`).
 - Primary buttons use `bg-fg text-white` (`Hero.tsx`, `page.tsx` skip link, `not-found.tsx`); the Black Hat check icons use `text-white` on `bg-accent`.
@@ -187,7 +190,7 @@ Scale:
 
 ### 6.1 Page order
 1. **Hero** (`#top`) — "Riyadh, Saudi Arabia · Age 16", name, role ("Student developer and web security learner"), intro, buttons (View achievements / About me), **Highlights** card: Defenseathon 1st (SAR 25,000) · Future of Mobility Hackathon 1st (SAR 10,000) · Tuwaiq Challenges CTF 2nd (LEAP 2026 · Day 2) · Black Hat Bug Bounty Jr. Stage 3 (In progress) · PCEP (Jun 2026). Rows link to their entries. The card is **derived from the data files**, not typed separately.
-2. **Achievements** (`#achievements`) — Defenseathon (wide 16:9 photo, plus a 5-step timeline card: Registration closed 2 Apr 2026, Satr platform 5–18 Apr, Tuwaiq camp 24 Apr – 2 May, Defenseathon challenge 3–5 May, Won 1st place 5 May), Future of Mobility + Tuwaiq CTF (side-by-side 4:5 photos), Black Hat card with a 5-stage progress line (horizontal on desktop, vertical on phones): Stage 1 Cybersecurity Fundamentals (14 Aug – 30 Sep 2026) ✓, Stage 2 Introduction to Cybersecurity (13–24 Sep) ✓, Stage 3 Introduction to Vulnerability Discovery (11 Oct – 5 Nov) = current, Stage 4 Competition Preparation Camp (22–30 Nov), Stage 5 Competition at Black Hat (1–3 Dec) = not reached. To advance, change `status` in `blackHat.milestones`; the badges follow automatically.
+2. **Achievements** (`#achievements`) — Defenseathon (wide 16:9 photo), Future of Mobility + Tuwaiq CTF (side-by-side 4:5 photos), Defenseathon timeline panel directly above Black Hat (Registration closed 2 Apr 2026, Satr platform 5–18 Apr, Tuwaiq camp 24 Apr – 2 May, Defenseathon challenge 3–5 May, Won 1st place 5 May), Black Hat card with a 5-stage progress line (horizontal on desktop, vertical on phones): Stage 1 Cybersecurity Fundamentals (14 Aug – 30 Sep 2026) ✓, Stage 2 Introduction to Cybersecurity (13–24 Sep) ✓, Stage 3 Introduction to Vulnerability Discovery (11 Oct – 5 Nov) = current, Stage 4 Competition Preparation Camp (22–30 Nov), Stage 5 Competition at Black Hat (1–3 Dec) = not reached. To advance, change `status` in `blackHat.milestones`; the badges follow automatically.
 3. **About** (`#about`) — two short paragraphs + "What's next" (5 goals).
 4. **Learning** (`#learning`) — timeline: Tuwaiq Academy (24 Aug 2025 – 25 Jun 2026) → Project showcase at Tuwaiq Academy (20 Nov 2025, two photos) → PCEP (3 Jun 2026, with certificate image, ID and verify link) → Software development / engineering / data science (23 Aug 2026 – Present, marked "Now").
 5. **Skills** (`#skills`) — Security · Programming · Software · AI & data · Practice platforms, as chips.
