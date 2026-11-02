@@ -15,6 +15,7 @@ export const achievements: Achievement[] = [
     placement: "1st place",
     context: "General Education · Programming track",
     prize: { amount: 25000, currency: "SAR" },
+    note: "Won with a defensive project against a cyber-physical attack.",
     date: "2026-05-05",
     timeline: [
       { id: "registration", title: "Registration closed", status: "done", start: "2026-04-02" },
@@ -36,6 +37,7 @@ export const achievements: Achievement[] = [
     rank: "1st",
     placement: "1st place",
     prize: { amount: 10000, currency: "SAR" },
+    note: "Designing smart solutions for smart cars.",
     image: {
       src: "/images/achievements/future-of-mobility/cover",
       position: "50% 67%",
