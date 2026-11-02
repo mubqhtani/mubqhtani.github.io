@@ -14,6 +14,12 @@
   --color-line: #e2e6ee;
   --color-accent: #2563eb;
   --color-accent-soft: #e9efff;
+
+  /* Text and lines on the dark event passes. */
+  --color-pass-muted: #aab4c6;
+  --color-pass-dim: #8b97ad;
+  --color-pass-line: #33405a;
+  --color-pass-accent: #9db8ff;
 }
 
 @theme inline {

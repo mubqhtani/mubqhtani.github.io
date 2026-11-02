@@ -27,6 +27,17 @@ export function formatRange(start: string, end: string): string {
   return `${formatDate(start)} – ${formatDate(end)}`;
 }
 
+/** "2 Apr", "13–24 Sep" or "24 Apr – 2 May", with the year on request. */
+export function formatDayRange(start: string, end: string | undefined, withYear: boolean): string {
+  const a = parse(start);
+  const b = end ? parse(end) : a;
+  const range =
+    !end ? `${a.d} ${MONTHS[a.m]}`
+    : a.m === b.m ? `${a.d}–${b.d} ${MONTHS[b.m]}`
+    : `${a.d} ${MONTHS[a.m]} – ${b.d} ${MONTHS[b.m]}`;
+  return withYear ? `${range} ${b.y}` : range;
+}
+
 /** "SAR 25,000" */
 export function formatSAR(amount: number): string {
   return `SAR ${String(amount).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;

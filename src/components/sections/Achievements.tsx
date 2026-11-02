@@ -3,7 +3,7 @@ import { achievements, blackHat } from "@/data/achievements";
 import type { Achievement } from "@/data/types";
 import { resolveGallery, resolveMedia } from "@/lib/assets";
 import { formatDate, formatSAR } from "@/lib/format";
-import { EventTimeline } from "./EventTimeline";
+import { EventPass } from "./EventPass";
 import { Section } from "./Section";
 
 export function Achievements() {
@@ -20,21 +20,7 @@ export function Achievements() {
             ))}
           </div>
         )}
-        {achievements.map(
-          (a) =>
-            a.timeline && (
-              <EventTimeline
-                key={a.id}
-                id={`${a.id}-timeline`}
-                title={a.name}
-                score={a.rank}
-                scoreRest=" place"
-                meta={a.date ? `Won on ${formatDate(a.date)}` : ""}
-                steps={a.timeline}
-              />
-            ),
-        )}
-        <BlackHat />
+        <Passes />
       </div>
     </Section>
   );
@@ -77,19 +63,37 @@ function Entry({ a, wide }: { a: Achievement; wide?: boolean }) {
   );
 }
 
-function BlackHat() {
+function Passes() {
   const { steps } = blackHat;
   const current = steps.findIndex((s) => s.status === "current");
   return (
-    <EventTimeline
-      id={blackHat.id}
-      title={blackHat.name}
-      score={String(current + 1)}
-      scoreRest={`/${steps.length}`}
-      meta={`${blackHat.location} · In progress`}
-      steps={steps}
-    >
-      <Gallery images={resolveGallery(blackHat.gallery)} title="More photos" />
-    </EventTimeline>
+    <div className="grid gap-6 md:grid-cols-2">
+      {achievements.map(
+        (a) =>
+          a.timeline && (
+            <EventPass
+              key={a.id}
+              id={`${a.id}-pass`}
+              title={a.name}
+              context={a.context?.split(" · ").at(-1)}
+              score={a.rank}
+              scoreRest="place"
+              detail={[a.date && `Won ${formatDate(a.date)}`, a.prize && formatSAR(a.prize.amount)].filter(Boolean).join(" · ")}
+              steps={a.timeline}
+            />
+          ),
+      )}
+      <EventPass
+        id={blackHat.id}
+        title={blackHat.name}
+        context={blackHat.location}
+        score={String(current + 1)}
+        scoreRest={`of ${steps.length}`}
+        detail={`${steps[current].label} · In progress`}
+        steps={steps}
+      >
+        <Gallery images={resolveGallery(blackHat.gallery)} title="More photos" />
+      </EventPass>
+    </div>
   );
 }
