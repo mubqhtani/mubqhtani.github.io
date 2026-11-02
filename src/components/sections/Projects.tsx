@@ -53,8 +53,8 @@ export function Projects() {
                     </a>
                   )}
                   {p.links.repo && (
-                    <a href={p.links.repo} target="_blank" rel="noopener noreferrer" className="link">
-                      Source code
+                    <a href={p.links.repo} target="_blank" rel="noopener noreferrer" className="link break-all">
+                      {p.links.repo.replace(/^https?:\/\//, "")}
                     </a>
                   )}
                 </p>
