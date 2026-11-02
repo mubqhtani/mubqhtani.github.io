@@ -9,10 +9,8 @@ import { Section } from "./Section";
 export function Achievements() {
   const [first, ...rest] = achievements;
 
-  const prizes = achievements.reduce((sum, a) => sum + (a.prize?.amount ?? 0), 0);
-
   return (
-    <Section id="achievements" title="Achievements" note={`${formatSAR(prizes)} in prizes`}>
+    <Section id="achievements" title="Achievements">
       <div className="space-y-14 md:space-y-16">
         {first && <Entry a={first} wide />}
         {rest.length > 0 && (
