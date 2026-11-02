@@ -129,7 +129,6 @@ function BlackHat() {
           );
         })}
       </ol>
-      <p className="measure mt-6 text-[15px] text-muted">{blackHat.note}</p>
       <Gallery images={gallery} title="More photos" />
     </article>
   );

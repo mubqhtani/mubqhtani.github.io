@@ -54,7 +54,6 @@ export const blackHat: BlackHatJourney = {
   id: "black-hat",
   name: "Black Hat Bug Bounty Jr.",
   location: "Malham, Riyadh",
-  note: "Qualified for Stage 2 on 12 Sep 2026 and Stage 3 on 8 Oct 2026. I haven't reached Stages 4 and 5 yet; competing at Black Hat is the goal.",
   // Dates are the programme's published dates. Move `current` forward as stages are reached.
   milestones: [
     { id: "stage-1", label: "Stage 1", title: "Cybersecurity Fundamentals", status: "achieved", start: "2026-08-14", end: "2026-09-30" },

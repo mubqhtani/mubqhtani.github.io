@@ -72,7 +72,6 @@ export type BlackHatJourney = {
   id: string;
   name: string;
   location: string;
-  note: string;
   milestones: Milestone[];
   gallery?: GallerySlot;
 };
