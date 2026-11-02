@@ -124,9 +124,12 @@ export type Project = {
   summary: string;
   /** ISO date (YYYY-MM-DD). */
   date?: string;
+  /** The owner's part in the project. */
+  role?: string;
   /** Only technologies actually used. */
   tech: string[];
-  image?: MediaSlot;
+  /** Round logo shown in the panel beside the details. */
+  logo?: MediaSlot;
   /** Optional results table with bars, highest first. */
   results?: {
     title: string;
@@ -135,5 +138,6 @@ export type Project = {
   links?: {
     live?: string;
     repo?: string;
+    tiktok?: string;
   };
 };

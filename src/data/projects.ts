@@ -10,11 +10,21 @@ import type { Project } from "./types";
  *   summary: "What it does, in one or two sentences.",
  *   date: "2026-06-03",
  *   tech: ["Python", "NumPy"],
- *   image: { src: "/images/projects/my-project/cover", alt: "..." },
+ *   logo: { src: "/images/projects/my-project/logo", alt: "..." },
  *   links: { live: "https://...", repo: "https://github.com/..." },
  * }
  */
 export const projects: Project[] = [
+  {
+    id: "erth",
+    title: "Erth",
+    role: "Designer and content lead",
+    summary:
+      "A Saudi initiative by young Saudis that introduces Saudi culture and heritage: the places, stories and details that shape our identity, told in our generation's language. We research, verify, then tell the story. Our first episode covers Al-Muaiqiliyah in the heart of Riyadh.",
+    tech: ["Design", "Content", "Saudi heritage"],
+    logo: { src: "/images/projects/erth/logo", alt: "Erth logo" },
+    links: { tiktok: "https://www.tiktok.com/@erth_initiative" },
+  },
   {
     id: "titanic-capstone",
     title: "Titanic Survival Prediction",

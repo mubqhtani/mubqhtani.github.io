@@ -1,4 +1,4 @@
-import { Photo } from "@/components/ui/Lightbox";
+import Image from "next/image";
 import { projects } from "@/data/projects";
 import type { Project } from "@/data/types";
 import { resolveMedia } from "@/lib/assets";
@@ -6,79 +6,74 @@ import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { Section } from "./Section";
 
+const panel = "rounded-2xl bg-surface p-5 ring-1 ring-line md:p-6";
+
 /** Only rendered once src/data/projects.ts has entries. */
 export function Projects() {
   if (projects.length === 0) return null;
 
   return (
     <Section id="projects" title="Projects">
-      <div className={cn("grid gap-14", projects.length > 1 && "sm:grid-cols-2 sm:gap-8")}>
-        {projects.map((p) => {
-          const image = p.image && resolveMedia(p.image);
-          return (
-            <article
-              key={p.id}
-              aria-labelledby={`${p.id}-title`}
-              className={cn(p.results && "grid gap-8 lg:grid-cols-2 lg:gap-12")}
-            >
-              <div className="min-w-0">
-              {image && (
-                <Photo
-                  image={image}
-                  aspect="aspect-[16/10]"
-                  sizes="(min-width: 1080px) 500px, (min-width: 640px) 50vw, 100vw"
-                  position={p.image?.position}
-                  className="mb-5 rounded-2xl"
-                />
-              )}
-              <div className="flex items-baseline justify-between gap-4">
-                <h3 id={`${p.id}-title`} className="font-display text-xl font-semibold tracking-[-0.015em]">
-                  {p.title}
-                </h3>
-                {p.date && (
-                  <p className="tabular shrink-0 text-sm text-muted">
-                    <time dateTime={p.date}>{formatDate(p.date)}</time>
-                  </p>
-                )}
-              </div>
-              <p className="measure mt-2 text-[15px] leading-relaxed text-muted">{p.summary}</p>
-              {p.tech.length > 0 && (
-                <ul className="mt-4 flex flex-wrap gap-2">
-                  {p.tech.map((t) => (
-                    <li key={t} className="rounded-full bg-surface px-3 py-1 text-sm ring-1 ring-line">
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {(p.links?.live || p.links?.repo) && (
-                <p className="mt-4 flex gap-5 text-[15px]">
-                  {p.links.live && (
-                    <a href={p.links.live} target="_blank" rel="noopener noreferrer" className="link">
-                      Live site
-                    </a>
-                  )}
-                  {p.links.repo && (
-                    <a href={p.links.repo} target="_blank" rel="noopener noreferrer" className="link break-all">
-                      {p.links.repo.replace(/^https?:\/\//, "")}
-                    </a>
-                  )}
-                </p>
-              )}
-              </div>
-              {p.results && <Results results={p.results} />}
-            </article>
-          );
-        })}
+      <div className="divide-y divide-line">
+        {projects.map((p) => (
+          <ProjectRow key={p.id} project={p} />
+        ))}
       </div>
     </Section>
+  );
+}
+
+/** Every project uses the same row: details on the left, one panel on the right. */
+function ProjectRow({ project: p }: { project: Project }) {
+  const logo = p.logo && resolveMedia(p.logo);
+  const subtitle = [p.role, p.date && formatDate(p.date)].filter(Boolean).join(" · ");
+  const links = [p.links?.live, p.links?.tiktok, p.links?.repo].filter(Boolean) as string[];
+
+  return (
+    <article
+      aria-labelledby={`${p.id}-title`}
+      className="grid gap-6 py-10 first:pt-0 last:pb-0 lg:grid-cols-2 lg:gap-12"
+    >
+      <div className="min-w-0">
+        <h3 id={`${p.id}-title`} className="font-display text-xl font-semibold tracking-[-0.015em]">
+          {p.title}
+        </h3>
+        {subtitle && <p className="tabular mt-0.5 text-[15px] text-fg/85">{subtitle}</p>}
+        <p className="mt-3 text-[15px] leading-relaxed text-muted">{p.summary}</p>
+        {p.tech.length > 0 && (
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {p.tech.map((t) => (
+              <li key={t} className="rounded-full bg-surface px-3 py-1 text-sm ring-1 ring-line">
+                {t}
+              </li>
+            ))}
+          </ul>
+        )}
+        {links.map((href) => (
+          <p key={href} className="mt-4 text-[15px]">
+            <a href={href} target="_blank" rel="noopener noreferrer" className="link break-all">
+              {href.replace(/^https?:\/\/(www\.)?/, "")}
+            </a>
+          </p>
+        ))}
+      </div>
+
+      {p.results && <Results results={p.results} />}
+      {logo && (
+        <div className={cn(panel, "grid place-items-center")}>
+          <span className="relative block aspect-square w-44 overflow-hidden rounded-full lg:w-52">
+            <Image src={logo.src} alt={logo.alt} fill sizes="208px" className="object-cover" />
+          </span>
+        </div>
+      )}
+    </article>
   );
 }
 
 /** One bar per row on a 0–100 scale. Only the best result gets the accent color. */
 function Results({ results }: { results: NonNullable<Project["results"]> }) {
   return (
-    <figure className="m-0 rounded-2xl bg-surface p-5 ring-1 ring-line md:p-6">
+    <figure className={cn("m-0", panel)}>
       <figcaption className="font-display text-lg font-semibold tracking-[-0.01em]">{results.title}</figcaption>
       <table className="mt-4 w-full border-collapse text-sm">
         <thead>
