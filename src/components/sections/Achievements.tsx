@@ -1,15 +1,10 @@
 import { Gallery, Photo } from "@/components/ui/Lightbox";
 import { achievements, blackHat } from "@/data/achievements";
-import type { Achievement, TimelineStep } from "@/data/types";
+import type { Achievement } from "@/data/types";
 import { resolveGallery, resolveMedia } from "@/lib/assets";
-import { formatRange, formatSAR } from "@/lib/format";
+import { formatDate, formatSAR } from "@/lib/format";
 import { EventTimeline } from "./EventTimeline";
 import { Section } from "./Section";
-
-function timelineDates(steps: TimelineStep[]) {
-  const last = steps[steps.length - 1];
-  return formatRange(steps[0].start, last.end ?? last.start);
-}
 
 export function Achievements() {
   const [first, ...rest] = achievements;
@@ -32,8 +27,9 @@ export function Achievements() {
                 key={a.id}
                 id={`${a.id}-timeline`}
                 title={a.name}
-                badge={a.rank}
-                meta={timelineDates(a.timeline)}
+                score={a.rank}
+                scoreRest=" place"
+                meta={a.date ? `Won on ${formatDate(a.date)}` : ""}
                 steps={a.timeline}
               />
             ),
@@ -82,15 +78,16 @@ function Entry({ a, wide }: { a: Achievement; wide?: boolean }) {
 }
 
 function BlackHat() {
-  const current = blackHat.steps.find((s) => s.status === "current");
+  const { steps } = blackHat;
+  const current = steps.findIndex((s) => s.status === "current");
   return (
     <EventTimeline
       id={blackHat.id}
       title={blackHat.name}
-      badge={current?.label ?? "Now"}
-      ongoing
+      score={String(current + 1)}
+      scoreRest={`/${steps.length}`}
       meta={`${blackHat.location} · In progress`}
-      steps={blackHat.steps}
+      steps={steps}
     >
       <Gallery images={resolveGallery(blackHat.gallery)} title="More photos" />
     </EventTimeline>
