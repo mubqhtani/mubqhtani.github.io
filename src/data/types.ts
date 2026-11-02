@@ -34,6 +34,17 @@ export type SocialLink = {
 
 export type Prize = { amount: number; currency: "SAR" };
 
+export type Milestone = {
+  id: string;
+  /** Short label above the title, e.g. "Stage 3" (also used as the badge). */
+  label?: string;
+  title: string;
+  status: "achieved" | "current" | "upcoming" | "won";
+  /** ISO dates. Omit `end` for a single day. */
+  start: string;
+  end?: string;
+};
+
 export type Achievement = {
   id: string;
   name: string;
@@ -50,22 +61,13 @@ export type Achievement = {
   note?: string;
   image?: MediaSlot;
   gallery?: GallerySlot;
+  /** Optional progress line shown under the entry. */
+  timeline?: Milestone[];
   /** The project built for this competition (optional, add later). */
   project?: {
     summary?: string;
     href?: string;
   };
-};
-
-export type Milestone = {
-  id: string;
-  /** Short label, e.g. "Stage 3" (also used as the badge). */
-  label: string;
-  title: string;
-  status: "achieved" | "current" | "upcoming";
-  /** ISO dates. */
-  start: string;
-  end: string;
 };
 
 export type BlackHatJourney = {

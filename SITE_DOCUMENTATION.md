@@ -80,6 +80,7 @@ mubarak-portfolio/
     │   ├── sections/Section.tsx   Shared wrapper: top hairline + section heading
     │   ├── sections/Hero.tsx      Name, role, intro, buttons, Highlights card
     │   ├── sections/Achievements.tsx  Photo entries + Black Hat progress card
+    │   ├── sections/Steps.tsx     Shared progress line (Black Hat stages, Defenseathon timeline)
     │   ├── sections/About.tsx     Story paragraphs + "What's next" list
     │   ├── sections/Learning.tsx  Vertical timeline + PCEP certificate
     │   ├── sections/Skills.tsx    Grouped skill chips
@@ -186,7 +187,7 @@ Scale:
 
 ### 6.1 Page order
 1. **Hero** (`#top`) — "Riyadh, Saudi Arabia · Age 16", name, role ("Student developer and web security learner"), intro, buttons (View achievements / About me), **Highlights** card: Defenseathon 1st (SAR 25,000) · Future of Mobility Hackathon 1st (SAR 10,000) · Tuwaiq Challenges CTF 2nd (LEAP 2026 · Day 2) · Black Hat Bug Bounty Jr. Stage 3 (In progress) · PCEP (Jun 2026). Rows link to their entries. The card is **derived from the data files**, not typed separately.
-2. **Achievements** (`#achievements`) — Defenseathon (wide 16:9 photo), Future of Mobility + Tuwaiq CTF (side-by-side 4:5 photos), Black Hat card with a 5-stage progress line (horizontal on desktop, vertical on phones): Stage 1 Cybersecurity Fundamentals (14 Aug – 30 Sep 2026) ✓, Stage 2 Introduction to Cybersecurity (13–24 Sep) ✓, Stage 3 Introduction to Vulnerability Discovery (11 Oct – 5 Nov) = current, Stage 4 Competition Preparation Camp (22–30 Nov), Stage 5 Competition at Black Hat (1–3 Dec) = not reached. To advance, change `status` in `blackHat.milestones`; the badges follow automatically.
+2. **Achievements** (`#achievements`) — Defenseathon (wide 16:9 photo, plus a 5-step timeline card: Registration closed 2 Apr 2026, Satr platform 5–18 Apr, Tuwaiq camp 24 Apr – 2 May, Defenseathon challenge 3–5 May, Won 1st place 5 May), Future of Mobility + Tuwaiq CTF (side-by-side 4:5 photos), Black Hat card with a 5-stage progress line (horizontal on desktop, vertical on phones): Stage 1 Cybersecurity Fundamentals (14 Aug – 30 Sep 2026) ✓, Stage 2 Introduction to Cybersecurity (13–24 Sep) ✓, Stage 3 Introduction to Vulnerability Discovery (11 Oct – 5 Nov) = current, Stage 4 Competition Preparation Camp (22–30 Nov), Stage 5 Competition at Black Hat (1–3 Dec) = not reached. To advance, change `status` in `blackHat.milestones`; the badges follow automatically.
 3. **About** (`#about`) — two short paragraphs + "What's next" (5 goals).
 4. **Learning** (`#learning`) — timeline: Tuwaiq Academy (24 Aug 2025 – 25 Jun 2026) → Project showcase at Tuwaiq Academy (20 Nov 2025, two photos) → PCEP (3 Jun 2026, with certificate image, ID and verify link) → Software development / engineering / data science (23 Aug 2026 – Present, marked "Now").
 5. **Skills** (`#skills`) — Security · Programming · Software · AI & data · Practice platforms, as chips.
@@ -325,7 +326,7 @@ The owner explicitly rejected "AI slop". Keep it that way.
 1. Spelling: the user wrote "Defenseathon"; the official cheque says **"Defensethon"**. Site currently uses "Defenseathon".
 2. Were Defenseathon and Future of Mobility team wins? (Another student appears in both photos.) Credit teammate?
 3. Projects built at each hackathon (name, what it does, tech actually used, role). A "Smart Parking System" poster is visible behind the Future of Mobility photo — not confirmed as his project, so not mentioned.
-4. Hackathon dates (the Mobility cheque shows 19/05 with the year hidden).
+4. Future of Mobility date (the cheque shows 19/05 with the year hidden). Defenseathon is confirmed: won on 5 May 2026.
 4a. Is Waffir (the project on the showcase screen) his project? The screen lists Figma and "Waffir Model". Not claimed on the site until confirmed.
 4b. Black Hat Stage 1 is listed as ending 30 Sep, after Stage 2 ends on 24 Sep. Used as supplied; confirm the date.
 5. GitHub and LinkedIn links, if he wants them in Contact. The capstone repo is under the account `qhtanI`, which differs from the site's `mubqhtani`.

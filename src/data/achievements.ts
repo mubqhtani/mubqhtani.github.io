@@ -15,6 +15,14 @@ export const achievements: Achievement[] = [
     placement: "1st place",
     context: "General Education · Programming track",
     prize: { amount: 25000, currency: "SAR" },
+    date: "2026-05-05",
+    timeline: [
+      { id: "registration", title: "Registration closed", status: "achieved", start: "2026-04-02" },
+      { id: "satr", title: "Satr platform (remote)", status: "achieved", start: "2026-04-05", end: "2026-04-18" },
+      { id: "camp", title: "Tuwaiq camp (in person)", status: "achieved", start: "2026-04-24", end: "2026-05-02" },
+      { id: "challenge", title: "Defenseathon challenge", status: "achieved", start: "2026-05-03", end: "2026-05-05" },
+      { id: "win", title: "Won 1st place", status: "won", start: "2026-05-05" },
+    ],
     image: {
       src: "/images/achievements/defenseathon/cover",
       alt: "Defenseathon award ceremony: first place, General Education, SAR 25,000",
