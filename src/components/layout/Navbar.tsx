@@ -7,9 +7,11 @@ import { cn } from "@/lib/utils";
 type NavbarProps = {
   wordmark: string;
   items: { id: string; label: string }[];
+  /** Set on other pages so section links lead back to the home page. */
+  linkPrefix?: string;
 };
 
-export function Navbar({ wordmark, items }: NavbarProps) {
+export function Navbar({ wordmark, items, linkPrefix = "" }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
@@ -95,7 +97,7 @@ export function Navbar({ wordmark, items }: NavbarProps) {
       )}
     >
       <div className="container-x flex h-16 items-center justify-between gap-6">
-        <a href="#top" className="shrink-0 whitespace-nowrap font-display text-[17px] font-semibold tracking-[-0.01em]" onClick={() => setOpen(false)}>
+        <a href={`${linkPrefix}#top`} className="shrink-0 whitespace-nowrap font-display text-[17px] font-semibold tracking-[-0.01em]" onClick={() => setOpen(false)}>
           {wordmark}
         </a>
 
@@ -104,7 +106,7 @@ export function Navbar({ wordmark, items }: NavbarProps) {
             {items.map((item) => (
               <li key={item.id}>
                 <a
-                  href={`#${item.id}`}
+                  href={`${linkPrefix}#${item.id}`}
                   aria-current={active === item.id ? "true" : undefined}
                   className={cn(
                     "rounded-full px-2.5 py-2 text-[14px] font-medium transition-colors lg:px-3.5",
@@ -138,7 +140,7 @@ export function Navbar({ wordmark, items }: NavbarProps) {
               {items.map((item) => (
                 <li key={item.id}>
                   <a
-                    href={`#${item.id}`}
+                    href={`${linkPrefix}#${item.id}`}
                     onClick={() => setOpen(false)}
                     className="block py-4 font-display text-2xl font-semibold"
                   >

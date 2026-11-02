@@ -20,6 +20,7 @@
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-bricolage), var(--font-geist), ui-sans-serif, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-arabic: var(--font-plex-arabic), var(--font-geist), ui-sans-serif, sans-serif;
 }
 
 @layer base {
@@ -129,6 +130,67 @@
   .link:hover {
     text-decoration-color: var(--color-accent);
   }
+}
+
+/* Long-form Arabic text. Keeps to the site's colors at a reading size. */
+.article-body {
+  font-size: 1.125rem;
+  line-height: 2;
+  color: rgb(14 22 40 / 0.86);
+}
+.article-body > * + * {
+  margin-top: 1.25em;
+}
+.article-body h2 {
+  margin-top: 2.5em;
+  color: var(--color-fg);
+  font-size: 1.625rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.article-body h3 {
+  margin-top: 2em;
+  color: var(--color-fg);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.article-body h2 + *,
+.article-body h3 + * {
+  margin-top: 0.75em;
+}
+.article-body p:has(> img) {
+  margin-block: 2em;
+}
+.article-body img {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  height: auto;
+  margin-inline: auto;
+  border-radius: 1rem;
+  background: var(--color-surface);
+  box-shadow: 0 0 0 1px var(--color-line);
+}
+.article-body ol {
+  padding-inline-start: 1.5em;
+  list-style: decimal;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.article-body li + li {
+  margin-top: 0.5em;
+}
+.article-body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: rgb(37 99 235 / 0.35);
+  text-underline-offset: 0.25em;
+  overflow-wrap: anywhere;
+  unicode-bidi: plaintext;
+}
+.article-body a:hover {
+  text-decoration-color: var(--color-accent);
 }
 
 /* Lightbox fade */

@@ -2,6 +2,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { About } from "@/components/sections/About";
 import { Achievements } from "@/components/sections/Achievements";
+import { Articles } from "@/components/sections/Articles";
 import { Contact } from "@/components/sections/Contact";
 import { Hero } from "@/components/sections/Hero";
 import { Learning } from "@/components/sections/Learning";
@@ -48,6 +49,7 @@ export default function Page() {
         <Learning />
         <Skills />
         <Projects />
+        <Articles />
         <Contact />
       </main>
 

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Geist, Geist_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { profile } from "@/data/profile";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
@@ -20,6 +20,15 @@ const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
   subsets: ["latin"],
   display: "swap",
+});
+
+// Only articles use this face, so the browser fetches it only on those.
+const plexArabic = IBM_Plex_Sans_Arabic({
+  variable: "--font-plex-arabic",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: false,
 });
 
 const description =
@@ -54,7 +63,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${bricolage.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${geist.variable} ${geistMono.variable} ${bricolage.variable} ${plexArabic.variable}`}>
       <body className="min-h-dvh">{children}</body>
     </html>
   );
