@@ -1,5 +1,6 @@
 import { Photo } from "@/components/ui/Lightbox";
 import { projects } from "@/data/projects";
+import type { Project } from "@/data/types";
 import { resolveMedia } from "@/lib/assets";
 import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -15,7 +16,12 @@ export function Projects() {
         {projects.map((p) => {
           const image = p.image && resolveMedia(p.image);
           return (
-            <article key={p.id} aria-labelledby={`${p.id}-title`}>
+            <article
+              key={p.id}
+              aria-labelledby={`${p.id}-title`}
+              className={cn(p.results && "grid gap-8 lg:grid-cols-2 lg:gap-12")}
+            >
+              <div className="min-w-0">
               {image && (
                 <Photo
                   image={image}
@@ -59,10 +65,57 @@ export function Projects() {
                   )}
                 </p>
               )}
+              </div>
+              {p.results && <Results results={p.results} />}
             </article>
           );
         })}
       </div>
     </Section>
+  );
+}
+
+/** One bar per row on a 0–100 scale. Only the best result gets the accent color. */
+function Results({ results }: { results: NonNullable<Project["results"]> }) {
+  return (
+    <figure className="m-0 rounded-2xl bg-surface p-5 ring-1 ring-line md:p-6">
+      <figcaption className="font-display text-lg font-semibold tracking-[-0.01em]">{results.title}</figcaption>
+      <table className="mt-4 w-full border-collapse text-sm">
+        <thead>
+          <tr className="text-left text-muted">
+            <th scope="col" className="pb-2 font-normal">
+              Model
+            </th>
+            <th scope="col" className="pb-2 pl-3 font-normal">
+              Accuracy
+            </th>
+            <th scope="col" className="pb-2 pl-3 text-right font-normal">
+              F1
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {results.rows.map((row) => (
+            <tr key={row.label}>
+              <th scope="row" className={cn("whitespace-nowrap py-2 text-left", row.best ? "font-semibold" : "font-normal")}>
+                {row.label}
+              </th>
+              <td className="w-full py-2 pl-3">
+                <span className="flex items-center gap-2.5">
+                  <span aria-hidden className="h-2 flex-1 rounded-full bg-bg">
+                    <span
+                      className={cn("block h-full rounded-full", row.best ? "bg-accent" : "bg-muted/45")}
+                      style={{ width: `${row.value}%` }}
+                    />
+                  </span>
+                  <span className={cn("tabular", row.best && "font-semibold")}>{row.value}%</span>
+                </span>
+              </td>
+              <td className={cn("tabular py-2 pl-3 text-right", row.best && "font-semibold")}>{row.f1}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </figure>
   );
 }

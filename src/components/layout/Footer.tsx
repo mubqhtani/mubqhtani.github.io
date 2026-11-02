@@ -1,11 +1,15 @@
 import { profile } from "@/data/profile";
+import { formatDate } from "@/lib/format";
+
+const buildDate = process.env.NEXT_PUBLIC_BUILD_DATE;
 
 export function Footer() {
   return (
-    <footer className="border-t border-line">
-      <div className="container-x flex flex-wrap items-center justify-between gap-4 py-8 text-sm text-muted">
-        <p>
-          © <span className="tabular">{profile.year}</span> {profile.shortName}
+    <footer className="container-x">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-line py-8 text-sm text-muted">
+        <p className="tabular">
+          © {profile.year} {profile.shortName}
+          {buildDate && ` · Updated ${formatDate(buildDate)}`}
         </p>
         <a href="#top" className="transition-colors hover:text-fg">
           Back to top

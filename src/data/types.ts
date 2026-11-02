@@ -87,8 +87,10 @@ export type TimelineEntry = {
   title: string;
   org?: string;
   body?: string;
-  /** Photos shown side by side inside this entry. */
+  /** Photos shown beside this entry. */
   photos?: MediaSlot[];
+  /** Optional line of stops shown under this entry. */
+  steps?: TimelineStep[];
   /** Shows a certificate (by id from certifications.ts) inside this entry. */
   certificationId?: string;
 };
@@ -121,6 +123,11 @@ export type Project = {
   /** Only technologies actually used. */
   tech: string[];
   image?: MediaSlot;
+  /** Optional results table with bars, highest first. */
+  results?: {
+    title: string;
+    rows: { label: string; value: number; f1: string; best?: boolean }[];
+  };
   links?: {
     live?: string;
     repo?: string;

@@ -2,14 +2,16 @@
 
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { CommandMenu, type Command } from "@/components/ui/CommandMenu";
 import { cn } from "@/lib/utils";
 
 type NavbarProps = {
   wordmark: string;
   items: { id: string; label: string }[];
+  commands: Command[];
 };
 
-export function Navbar({ wordmark, items }: NavbarProps) {
+export function Navbar({ wordmark, items, commands }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
@@ -99,24 +101,27 @@ export function Navbar({ wordmark, items }: NavbarProps) {
           {wordmark}
         </a>
 
-        <nav aria-label="Primary" className="hidden md:block">
-          <ul className="flex items-center gap-1">
-            {items.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  aria-current={active === item.id ? "true" : undefined}
-                  className={cn(
-                    "rounded-full px-2.5 py-2 text-[14px] font-medium transition-colors lg:px-3.5",
-                    active === item.id ? "bg-surface text-fg ring-1 ring-line" : "text-muted hover:text-fg",
-                  )}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="flex items-center gap-3">
+          <nav aria-label="Primary" className="hidden md:block">
+            <ul className="flex items-center gap-1">
+              {items.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    aria-current={active === item.id ? "true" : undefined}
+                    className={cn(
+                      "rounded-full px-2.5 py-2 text-[14px] font-medium transition-colors lg:px-3.5",
+                      active === item.id ? "bg-surface text-fg ring-1 ring-line" : "text-muted hover:text-fg",
+                    )}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <CommandMenu commands={commands} />
+        </div>
 
         <button
           ref={toggleRef}

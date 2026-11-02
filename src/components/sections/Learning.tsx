@@ -3,8 +3,9 @@ import { certifications } from "@/data/certifications";
 import { timeline } from "@/data/education";
 import type { Certification, MediaSlot, TimelineEntry } from "@/data/types";
 import { resolveMedia } from "@/lib/assets";
-import { formatDate } from "@/lib/format";
+import { formatDate, formatMonth } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { StepLine } from "./EventLine";
 import { Section } from "./Section";
 
 function Dates({ entry }: { entry: TimelineEntry }) {
@@ -23,12 +24,13 @@ function Dates({ entry }: { entry: TimelineEntry }) {
 
 export function Learning() {
   return (
-    <Section id="learning" title="Learning">
+    <Section id="learning" title="Learning" note={`Since ${formatMonth(timeline[0].start)}`}>
       <ol>
         {timeline.map((entry, i) => {
           const cert = entry.certificationId ? certifications.find((c) => c.id === entry.certificationId) : undefined;
           const ongoing = entry.end === "present";
           const last = i === timeline.length - 1;
+          const hasMedia = Boolean(cert || entry.photos);
           return (
             <li key={entry.id} className="relative grid grid-cols-[1.25rem_1fr] gap-x-5 pb-10 last:pb-0">
               {/* Timeline rail */}
@@ -40,16 +42,24 @@ export function Learning() {
                   ongoing ? "border-accent bg-accent ring-4 ring-accent-soft" : "border-line bg-surface",
                 )}
               />
-              <div className="min-w-0">
-                <p className="tabular text-sm text-muted">
-                  <Dates entry={entry} />
-                  {ongoing && <span className="badge ms-3 h-6 min-w-0 text-xs">Now</span>}
-                </p>
-                <h3 className="mt-1 text-lg font-semibold">{entry.title}</h3>
-                {entry.org && <p className="text-[15px] text-muted">{entry.org}</p>}
-                {entry.body && <p className="measure mt-2 text-[15px] leading-relaxed text-fg/85">{entry.body}</p>}
+              <div className={cn("min-w-0", hasMedia && "lg:grid lg:grid-cols-[1fr_24rem] lg:gap-10")}>
+                <div className="min-w-0">
+                  <p className="tabular text-sm text-muted">
+                    <Dates entry={entry} />
+                    {ongoing && <span className="badge ms-3 h-6 min-w-0 text-xs">Now</span>}
+                  </p>
+                  <h3 className="mt-1 text-lg font-semibold">{entry.title}</h3>
+                  {entry.org && <p className="text-[15px] text-muted">{entry.org}</p>}
+                  {entry.body && <p className="measure mt-2 text-[15px] leading-relaxed text-fg/85">{entry.body}</p>}
+                  {cert && <CertificateDetails cert={cert} />}
+                </div>
                 {entry.photos && <EntryPhotos photos={entry.photos} />}
-                {cert && <CertificateBlock cert={cert} />}
+                {cert && <CertificateImage cert={cert} />}
+                {entry.steps && (
+                  <div className="mt-6 lg:col-span-2 lg:mt-2">
+                    <StepLine steps={entry.steps} />
+                  </div>
+                )}
               </div>
             </li>
           );
@@ -61,7 +71,7 @@ export function Learning() {
 
 function EntryPhotos({ photos }: { photos: MediaSlot[] }) {
   return (
-    <div className="mt-4 grid max-w-md grid-cols-2 gap-3">
+    <div className={cn("mt-4 grid max-w-md gap-3 lg:mt-1 lg:max-w-none", photos.length > 1 && "grid-cols-2")}>
       {photos.map((slot) => {
         const image = resolveMedia(slot);
         if (!image) return null;
@@ -69,8 +79,8 @@ function EntryPhotos({ photos }: { photos: MediaSlot[] }) {
           <Photo
             key={slot.src}
             image={image}
-            aspect="aspect-[4/5]"
-            sizes="(min-width: 640px) 220px, 50vw"
+            aspect={photos.length > 1 ? "aspect-[4/5]" : "aspect-[8/5]"}
+            sizes={photos.length > 1 ? "(min-width: 1024px) 186px, 50vw" : "(min-width: 1024px) 384px, 100vw"}
             position={slot.position}
             className="rounded-xl"
           />
@@ -80,22 +90,12 @@ function EntryPhotos({ photos }: { photos: MediaSlot[] }) {
   );
 }
 
-function CertificateBlock({ cert }: { cert: Certification }) {
-  const image = resolveMedia(cert.image);
+function CertificateDetails({ cert }: { cert: Certification }) {
   return (
-    <div className="mt-2">
-      <p className="text-[15px] text-fg/85">
+    <div className="mt-2 text-[15px] text-fg/85">
+      <p>
         {cert.code} · {cert.title}
       </p>
-      {image && (
-        <Photo
-          image={image}
-          aspect="aspect-[1179/815]"
-          sizes="(min-width: 640px) 448px, 100vw"
-          fit="contain"
-          className="mt-4 max-w-md rounded-xl ring-1 ring-line"
-        />
-      )}
       {(cert.credentialId || cert.verifyUrl) && (
         <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted">
           {cert.credentialId && (
@@ -111,5 +111,19 @@ function CertificateBlock({ cert }: { cert: Certification }) {
         </p>
       )}
     </div>
+  );
+}
+
+function CertificateImage({ cert }: { cert: Certification }) {
+  const image = resolveMedia(cert.image);
+  if (!image) return null;
+  return (
+    <Photo
+      image={image}
+      aspect="aspect-[1179/815]"
+      sizes="(min-width: 1024px) 384px, 100vw"
+      fit="contain"
+      className="mt-4 max-w-md rounded-xl ring-1 ring-line lg:mt-1 lg:max-w-none"
+    />
   );
 }

@@ -29,6 +29,22 @@ export const timeline: TimelineEntry[] = [
     ],
   },
   {
+    id: "tuwaiqthon",
+    start: "2026-03-01",
+    end: "2026-03-08",
+    title: "Tuwaiqthon",
+    org: "Tuwaiq Academy · Remote, then in person",
+    body: "My first competition. I didn't place, but I finished every stage and came out understanding how competitions really work. That's when I started working seriously, and two months later I won Defenseathon.",
+    photos: [{ src: "/images/learning/tuwaiqthon", alt: "Illuminated Tuwaiqthon sign at the hackathon venue" }],
+    // Dates from the hackathon's announcement.
+    steps: [
+      { id: "registration", title: "Registration", status: "done", start: "2026-02-18" },
+      { id: "acceptance", title: "Final acceptance", status: "done", start: "2026-02-28" },
+      { id: "remote", title: "Remote stage", status: "done", start: "2026-03-01", end: "2026-03-05" },
+      { id: "in-person", title: "In-person stage", status: "done", start: "2026-03-06", end: "2026-03-08" },
+    ],
+  },
+  {
     id: "pcep",
     start: "2026-06-03",
     title: "PCEP certification",

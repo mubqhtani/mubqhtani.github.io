@@ -171,7 +171,7 @@ export function Photo({ image, labels = defaultLabels, aspect, sizes, position, 
           preload={priority}
           style={position ? { objectPosition: position } : undefined}
           className={cn(
-            "transition-opacity duration-300 group-hover:opacity-90",
+            fit === "cover" && "transition-transform duration-500 ease-out group-hover:scale-[1.02] motion-reduce:transform-none",
             fit === "cover" ? "object-cover" : "object-contain",
           )}
         />

@@ -1,6 +1,8 @@
 import { Mail } from "lucide-react";
+import { CopyButton } from "@/components/ui/CopyButton";
 import { profile } from "@/data/profile";
 import type { SocialId } from "@/data/types";
+import { cn } from "@/lib/utils";
 import { Section } from "./Section";
 
 // lucide-react has no brand icons, so these two are drawn here.
@@ -38,13 +40,17 @@ export function Contact() {
       <ul className="grid gap-3 lg:grid-cols-3">
         {links.map((s) => {
           const Icon = ICONS[s.id];
+          const isEmail = s.id === "email";
           return (
-            <li key={s.id}>
+            <li key={s.id} className="relative">
               <a
                 href={s.href}
-                target={s.id === "email" ? undefined : "_blank"}
-                rel={s.id === "email" ? undefined : "noopener noreferrer"}
-                className="group flex items-center gap-3.5 rounded-2xl bg-surface p-4 ring-1 ring-line transition-shadow hover:ring-accent/50"
+                target={isEmail ? undefined : "_blank"}
+                rel={isEmail ? undefined : "noopener noreferrer"}
+                className={cn(
+                  "group flex items-center gap-3.5 rounded-2xl bg-surface p-4 ring-1 ring-line transition-shadow hover:ring-accent/50",
+                  isEmail && "pr-13",
+                )}
               >
                 <span className="grid size-11 shrink-0 place-items-center rounded-full bg-accent-soft text-accent">
                   {Icon && <Icon className="size-5" />}
@@ -56,6 +62,7 @@ export function Contact() {
                   </span>
                 </span>
               </a>
+              {isEmail && s.handle && <CopyButton text={s.handle} label="Copy email address" />}
             </li>
           );
         })}

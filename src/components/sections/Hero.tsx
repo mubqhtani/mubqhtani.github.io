@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { achievements, blackHat } from "@/data/achievements";
 import { certifications } from "@/data/certifications";
 import { profile } from "@/data/profile";
@@ -77,12 +77,16 @@ export function Hero() {
           <ul>
             {highlights.map((h) => (
               <li key={h.title}>
-                <a href={h.href} className="flex items-center gap-4 rounded-xl px-4 py-3 transition-colors hover:bg-bg">
+                <a href={h.href} className="group flex items-center gap-4 rounded-xl px-4 py-3 transition-colors hover:bg-bg">
                   <span className={cn("badge w-[4.75rem] shrink-0", h.ongoing && "badge-outline")}>{h.badge}</span>
-                  <span className="min-w-0">
+                  <span className="min-w-0 flex-1">
                     <span className="block font-medium leading-snug">{h.title}</span>
                     {h.meta && <span className="tabular block text-sm text-muted">{h.meta}</span>}
                   </span>
+                  <ArrowRight
+                    aria-hidden
+                    className="size-4 shrink-0 text-muted opacity-0 transition-[opacity,transform] group-hover:translate-x-0.5 group-hover:opacity-100 group-focus-visible:opacity-100"
+                  />
                 </a>
               </li>
             ))}

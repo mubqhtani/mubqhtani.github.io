@@ -13,8 +13,62 @@ type EventLineProps = {
 
 /**
  * One clean line with a stop for each step: horizontal from the md breakpoint,
- * vertical on phones. Defenseathon and Black Hat must stay identical, so
- * change this component rather than either competition.
+ * vertical on phones.
+ */
+export function StepLine({ steps }: { steps: TimelineStep[] }) {
+  return (
+    <ol className="md:grid md:auto-cols-fr md:grid-flow-col">
+      {steps.map((step, i) => {
+        const next = steps[i + 1];
+        const key = step.status === "current" || step.status === "won";
+        const upcoming = step.status === "upcoming";
+        return (
+          <li
+            key={step.id}
+            aria-current={step.status === "current" ? "step" : undefined}
+            className="relative pb-4 ps-7 last:pb-0 md:pb-0 md:pe-3.5 md:ps-0"
+          >
+            {next && (
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute bottom-0 start-[7px] top-2 w-0.5 md:bottom-auto md:end-0 md:start-0 md:top-[7px] md:h-0.5 md:w-auto",
+                  next.status === "upcoming" ? "bg-line" : "bg-fg",
+                )}
+              />
+            )}
+            <span
+              aria-hidden
+              className={cn(
+                "absolute start-0 top-0.5 block size-4 rounded-full md:relative md:top-0",
+                step.status === "done" && "bg-fg",
+                key && "bg-accent ring-[5px] ring-accent-soft",
+                upcoming && "bg-bg ring-2 ring-inset ring-muted/40",
+              )}
+            />
+            <span
+              className={cn(
+                "block text-[15px] font-medium leading-snug md:mt-3",
+                key && "font-semibold text-accent",
+                upcoming && "text-muted",
+              )}
+            >
+              {step.title}
+              {upcoming && <span className="sr-only"> (not reached yet)</span>}
+            </span>
+            <time dateTime={step.start} className="tabular block text-[13px] text-muted">
+              {formatDayRange(step.start, step.end, i === steps.length - 1)}
+            </time>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+/**
+ * A competition with its line of stops. Defenseathon and Black Hat must stay
+ * identical, so change this component rather than either competition.
  */
 export function EventLine({ id, title, meta, steps, children }: EventLineProps) {
   return (
@@ -25,53 +79,9 @@ export function EventLine({ id, title, meta, steps, children }: EventLineProps) 
         </h3>
         <p className="tabular text-[15px] text-muted">{meta}</p>
       </div>
-
-      <ol className="mt-6 md:grid md:auto-cols-fr md:grid-flow-col">
-        {steps.map((step, i) => {
-          const next = steps[i + 1];
-          const key = step.status === "current" || step.status === "won";
-          const upcoming = step.status === "upcoming";
-          return (
-            <li
-              key={step.id}
-              aria-current={step.status === "current" ? "step" : undefined}
-              className="relative pb-4 ps-7 last:pb-0 md:pb-0 md:pe-3.5 md:ps-0"
-            >
-              {next && (
-                <span
-                  aria-hidden
-                  className={cn(
-                    "absolute bottom-0 start-[7px] top-2 w-0.5 md:bottom-auto md:end-0 md:start-0 md:top-[7px] md:h-0.5 md:w-auto",
-                    next.status === "upcoming" ? "bg-line" : "bg-fg",
-                  )}
-                />
-              )}
-              <span
-                aria-hidden
-                className={cn(
-                  "absolute start-0 top-0.5 block size-4 rounded-full md:relative md:top-0",
-                  step.status === "done" && "bg-fg",
-                  key && "bg-accent ring-[5px] ring-accent-soft",
-                  upcoming && "bg-bg ring-2 ring-inset ring-muted/40",
-                )}
-              />
-              <span
-                className={cn(
-                  "block text-[15px] font-medium leading-snug md:mt-3",
-                  key && "font-semibold text-accent",
-                  upcoming && "text-muted",
-                )}
-              >
-                {step.title}
-                {upcoming && <span className="sr-only"> (not reached yet)</span>}
-              </span>
-              <time dateTime={step.start} className="tabular block text-[13px] text-muted">
-                {formatDayRange(step.start, step.end, i === steps.length - 1)}
-              </time>
-            </li>
-          );
-        })}
-      </ol>
+      <div className="mt-6">
+        <StepLine steps={steps} />
+      </div>
       {children}
     </article>
   );

@@ -5,7 +5,7 @@ export function About() {
   return (
     <Section id="about" title="About">
       <div className="grid gap-12 md:grid-cols-[1.4fr_1fr] md:gap-16">
-        <div className="measure space-y-5 text-[17px] leading-relaxed text-fg/90">
+        <div className="measure space-y-5 text-[17px] leading-relaxed text-fg/90 [&>p:first-child]:text-xl [&>p:first-child]:text-fg">
           {profile.about.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
