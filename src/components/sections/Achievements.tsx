@@ -3,7 +3,7 @@ import { Gallery, Photo } from "@/components/ui/Lightbox";
 import { achievements, blackHat } from "@/data/achievements";
 import type { Achievement } from "@/data/types";
 import { resolveGallery, resolveMedia } from "@/lib/assets";
-import { formatDate, formatSAR } from "@/lib/format";
+import { formatRange, formatSAR } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { Section } from "./Section";
 
@@ -65,7 +65,8 @@ function Entry({ a, wide }: { a: Achievement; wide?: boolean }) {
 }
 
 function BlackHat() {
-  const current = blackHat.milestones.findLastIndex((m) => m.status === "achieved");
+  const { milestones } = blackHat;
+  const current = milestones.find((m) => m.status === "current");
   const gallery = resolveGallery(blackHat.gallery);
 
   return (
@@ -75,7 +76,7 @@ function BlackHat() {
       className="scroll-mt-24 rounded-2xl bg-surface p-6 ring-1 ring-line md:p-8"
     >
       <div className="flex items-start gap-4">
-        <span className="badge badge-outline mt-0.5">{blackHat.milestones[current]?.label}</span>
+        <span className="badge badge-outline mt-0.5">{current?.label}</span>
         <div className="min-w-0">
           <h3 id="black-hat-title" className="font-display text-xl font-semibold tracking-[-0.015em] md:text-2xl">
             {blackHat.name}
@@ -84,35 +85,46 @@ function BlackHat() {
         </div>
       </div>
 
-      {/* Progress: filled steps are done, the outlined step is the goal. */}
-      <ol className="mt-8 grid grid-cols-3">
-        {blackHat.milestones.map((m, i) => {
+      {/* Filled = finished, ringed = current, outlined = not reached yet. Vertical on phones. */}
+      <ol className="mt-8 md:grid md:grid-cols-5">
+        {milestones.map((m, i) => {
           const done = m.status === "achieved";
-          const last = i === blackHat.milestones.length - 1;
+          const isCurrent = m.status === "current";
+          const next = milestones[i + 1];
           return (
-            <li key={m.id} className="relative pe-3">
-              {!last && (
+            <li key={m.id} className="relative flex gap-4 pb-6 last:pb-0 md:block md:pb-0 md:pe-4">
+              {next && (
                 <span
                   aria-hidden
                   className={cn(
-                    "absolute start-8 end-0 top-[13px] h-0.5",
-                    blackHat.milestones[i + 1].status === "achieved" ? "bg-accent" : "bg-line",
+                    "absolute start-[13px] top-7 bottom-0 w-0.5 md:start-7 md:end-0 md:top-[13px] md:bottom-auto md:h-0.5 md:w-auto",
+                    next.status === "upcoming" ? "bg-line" : "bg-accent",
                   )}
                 />
               )}
               <span
                 className={cn(
-                  "relative grid size-7 place-items-center rounded-full",
-                  done ? "bg-accent text-white" : "bg-surface text-muted ring-2 ring-line ring-inset",
-                  i === current && "ring-4 ring-accent-soft",
+                  "relative grid size-7 shrink-0 place-items-center rounded-full",
+                  done && "bg-accent text-white",
+                  isCurrent && "bg-accent ring-4 ring-accent-soft",
+                  m.status === "upcoming" && "bg-surface text-muted ring-2 ring-line ring-inset",
                 )}
               >
-                {done ? <Check className="size-4" strokeWidth={2.5} aria-hidden /> : <Flag className="size-3.5" aria-hidden />}
+                {done && <Check className="size-4" strokeWidth={2.5} aria-hidden />}
+                {isCurrent && <span aria-hidden className="size-2 rounded-full bg-white" />}
+                {!next && <Flag className="size-3.5" aria-hidden />}
               </span>
-              <p className={cn("mt-3 font-medium", !done && "text-muted")}>{m.label}</p>
-              <p className="tabular text-sm text-muted">
-                {m.date ? <time dateTime={m.date}>{formatDate(m.date)}</time> : "Goal"}
-              </p>
+              <div className="min-w-0 md:mt-3">
+                <p className="text-sm font-medium text-muted">
+                  {m.label}
+                  {isCurrent && " · Now"}
+                  {m.status === "upcoming" && <span className="sr-only"> (not reached yet)</span>}
+                </p>
+                <p className={cn("font-medium leading-snug", m.status === "upcoming" && "text-muted")}>{m.title}</p>
+                <p className="tabular mt-0.5 text-sm text-muted">
+                  <time dateTime={m.start}>{formatRange(m.start, m.end)}</time>
+                </p>
+              </div>
             </li>
           );
         })}

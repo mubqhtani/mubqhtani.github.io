@@ -18,6 +18,7 @@ These are optimized copies of the original photos (re-compressed, metadata/EXIF 
 | Future of Mobility | `public/images/achievements/future-of-mobility/cover.jpg` | Full image. The page crops it to 4:5 using `position` in `achievements.ts` |
 | Tuwaiq CTF | `public/images/achievements/tuwaiq-ctf-leap-2026/cover.jpg` | Cropped to remove the Snapchat caption and location sticker |
 | PCEP certificate | `public/images/certificates/pcep.jpg` | Shown in full, never cropped |
+| Project showcase | `public/images/learning/project-showcase-1.jpg`, `-2.jpg` | Added to the entry through `photos` in `education.ts`. The selfie was rotated upright |
 
 ## Adding more
 

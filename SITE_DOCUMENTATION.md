@@ -60,6 +60,7 @@ mubarak-portfolio/
 │   ├── achievements/<id>/cover.jpg     One photo per achievement
 │   ├── achievements/<id>/gallery/      Optional extra photos (01.jpg, 02.jpg …) — currently empty
 │   ├── certificates/pcep.jpg
+│   ├── learning/                  Photos shown inside Learning timeline entries
 │   ├── profile/                   Optional portrait (empty — none provided)
 │   ├── projects/                  Project screenshots (empty)
 │   └── logos/                     Reserved, not used anywhere yet
@@ -185,9 +186,9 @@ Scale:
 
 ### 6.1 Page order
 1. **Hero** (`#top`) — "Riyadh, Saudi Arabia · Age 16", name, role ("Student developer and web security learner"), intro, buttons (View achievements / About me), **Highlights** card: Defenseathon 1st (SAR 25,000) · Future of Mobility Hackathon 1st (SAR 10,000) · Tuwaiq Challenges CTF 2nd (LEAP 2026 · Day 2) · Black Hat Bug Bounty Jr. Stage 3 (In progress) · PCEP (Jun 2026). Rows link to their entries. The card is **derived from the data files**, not typed separately.
-2. **Achievements** (`#achievements`) — Defenseathon (wide 16:9 photo), Future of Mobility + Tuwaiq CTF (side-by-side 4:5 photos), Black Hat card with a 3-step progress line (Stage 2 ✓ 12 Sep 2026 → Stage 3 ✓ 8 Oct 2026 → Finals = goal).
+2. **Achievements** (`#achievements`) — Defenseathon (wide 16:9 photo), Future of Mobility + Tuwaiq CTF (side-by-side 4:5 photos), Black Hat card with a 5-stage progress line (horizontal on desktop, vertical on phones): Stage 1 Cybersecurity Fundamentals (14 Aug – 30 Sep 2026) ✓, Stage 2 Introduction to Cybersecurity (13–24 Sep) ✓, Stage 3 Introduction to Vulnerability Discovery (11 Oct – 5 Nov) = current, Stage 4 Competition Preparation Camp (22–30 Nov), Stage 5 Competition at Black Hat (1–3 Dec) = not reached. To advance, change `status` in `blackHat.milestones` and update `note`; the badges follow automatically.
 3. **About** (`#about`) — two short paragraphs + "What's next" (5 goals).
-4. **Learning** (`#learning`) — timeline: Tuwaiq Academy (24 Aug 2025 – 25 Jun 2026) → PCEP (3 Jun 2026, with certificate image, ID and verify link) → Software development / engineering / data science (23 Aug 2026 – Present, marked "Now").
+4. **Learning** (`#learning`) — timeline: Tuwaiq Academy (24 Aug 2025 – 25 Jun 2026) → Project showcase at Tuwaiq Academy (20 Nov 2025, two photos) → PCEP (3 Jun 2026, with certificate image, ID and verify link) → Software development / engineering / data science (23 Aug 2026 – Present, marked "Now").
 5. **Skills** (`#skills`) — Security · Programming · Software · AI & data · Practice platforms, as chips.
 6. **Projects** (`#projects`) — **hidden** (no projects yet).
 7. **Contact** (`#contact`) — **hidden** (no links yet).
@@ -215,6 +216,8 @@ All strings are plain English. Fields: `rank` (badge text), `placement`, `contex
 | Future of Mobility (holding 1st-place cheque, 10,000) | `…/future-of-mobility/cover.jpg` (900×1600) | Shown cropped 4:5 via `position: "50% 67%"`; full image in viewer |
 | Tuwaiq Challenges trophy, LEAP 2026 | `…/tuwaiq-ctf-leap-2026/cover.jpg` (840×1050) | Cropped to remove a Snapchat caption with emoji and location sticker |
 | PCEP certificate | `public/images/certificates/pcep.jpg` (1179×815) | Shown uncropped (`fit="contain"`) |
+| Tuwaiq Academy showcase screen (20 Nov 2025; shows the Waffir project) | `public/images/learning/project-showcase-1.jpg` (900×1600) | Shown cropped 4:5 via `position: "50% 10%"`; full image in viewer |
+| Selfie at the showcase | `public/images/learning/project-showcase-2.jpg` (1045×1242) | Rotated upright; the original was sideways |
 
 All were re-encoded with `sharp` (mozjpeg, q85/q90) and have **no EXIF/GPS/XMP metadata** (verified). The untouched originals are kept outside the repository on the owner's PC.
 
@@ -304,7 +307,7 @@ The owner explicitly rejected "AI slop". Keep it that way.
 ## 9. Content accuracy rules
 
 - Describe Mubarak as a **technology student / aspiring developer and security learner** — never a professional pentester, senior researcher or experienced engineer.
-- **Black Hat Bug Bounty Jr.:** qualified for Stage 2 (12 Sep 2026) and Stage 3 (8 Oct 2026). Never imply he reached or won the finals; finals = goal.
+- **Black Hat Bug Bounty Jr.:** five-stage programme, currently in Stage 3 (qualified for Stage 2 on 12 Sep 2026 and Stage 3 on 8 Oct 2026). Never imply he reached Stage 4, Stage 5 or the finals, or won anything; competing at Black Hat is the goal.
 - **Tuwaiq Challenges CTF (LEAP 2026, day 2):** a *small* CTF activity — 2nd place, two First Bloods (most in the activity), Tuwaiq Challenges trophy. Not a major championship.
 - Only confirmed dates are shown. Unknown dates are left out, not guessed.
 - Skills are areas of study/practice, not claimed expertise.
@@ -323,6 +326,8 @@ The owner explicitly rejected "AI slop". Keep it that way.
 2. Were Defenseathon and Future of Mobility team wins? (Another student appears in both photos.) Credit teammate?
 3. Projects built at each hackathon (name, what it does, tech actually used, role). A "Smart Parking System" poster is visible behind the Future of Mobility photo — not confirmed as his project, so not mentioned.
 4. Hackathon dates (the Mobility cheque shows 19/05 with the year hidden).
+4a. Is Waffir (the project on the showcase screen) his project? The screen lists Figma and "Waffir Model". Not claimed on the site until confirmed.
+4b. Black Hat Stage 1 is listed as ending 30 Sep, after Stage 2 ends on 24 Sep. Used as supplied; confirm the date.
 5. Contact links (email / GitHub / LinkedIn) to publish.
 6. Optional portrait photo.
 

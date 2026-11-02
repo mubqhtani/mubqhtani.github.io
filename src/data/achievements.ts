@@ -54,11 +54,14 @@ export const blackHat: BlackHatJourney = {
   id: "black-hat",
   name: "Black Hat Bug Bounty Jr.",
   location: "Malham, Riyadh",
-  note: "I haven't reached the finals yet. Getting there is the goal.",
+  note: "Qualified for Stage 2 on 12 Sep 2026 and Stage 3 on 8 Oct 2026. I haven't reached Stages 4 and 5 yet; competing at Black Hat is the goal.",
+  // Dates are the programme's published dates. Move `current` forward as stages are reached.
   milestones: [
-    { id: "stage-2", label: "Stage 2", status: "achieved", date: "2026-09-12" },
-    { id: "stage-3", label: "Stage 3", status: "achieved", date: "2026-10-08" },
-    { id: "finals", label: "Finals", status: "goal" },
+    { id: "stage-1", label: "Stage 1", title: "Cybersecurity Fundamentals", status: "achieved", start: "2026-08-14", end: "2026-09-30" },
+    { id: "stage-2", label: "Stage 2", title: "Introduction to Cybersecurity", status: "achieved", start: "2026-09-13", end: "2026-09-24" },
+    { id: "stage-3", label: "Stage 3", title: "Introduction to Vulnerability Discovery", status: "current", start: "2026-10-11", end: "2026-11-05" },
+    { id: "stage-4", label: "Stage 4", title: "Competition Preparation Camp", status: "upcoming", start: "2026-11-22", end: "2026-11-30" },
+    { id: "stage-5", label: "Stage 5", title: "Competition at Black Hat", status: "upcoming", start: "2026-12-01", end: "2026-12-03" },
   ],
   gallery: { folder: "/images/achievements/black-hat-bug-bounty-jr/gallery", alt: "Black Hat Bug Bounty Jr." },
 };

@@ -1,7 +1,7 @@
 import { Photo } from "@/components/ui/Lightbox";
 import { certifications } from "@/data/certifications";
 import { timeline } from "@/data/education";
-import type { Certification, TimelineEntry } from "@/data/types";
+import type { Certification, MediaSlot, TimelineEntry } from "@/data/types";
 import { resolveMedia } from "@/lib/assets";
 import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -48,6 +48,7 @@ export function Learning() {
                 <h3 className="mt-1 text-lg font-semibold">{entry.title}</h3>
                 {entry.org && <p className="text-[15px] text-muted">{entry.org}</p>}
                 {entry.body && <p className="measure mt-2 text-[15px] leading-relaxed text-fg/85">{entry.body}</p>}
+                {entry.photos && <EntryPhotos photos={entry.photos} />}
                 {cert && <CertificateBlock cert={cert} />}
               </div>
             </li>
@@ -55,6 +56,27 @@ export function Learning() {
         })}
       </ol>
     </Section>
+  );
+}
+
+function EntryPhotos({ photos }: { photos: MediaSlot[] }) {
+  return (
+    <div className="mt-4 grid max-w-md grid-cols-2 gap-3">
+      {photos.map((slot) => {
+        const image = resolveMedia(slot);
+        if (!image) return null;
+        return (
+          <Photo
+            key={slot.src}
+            image={image}
+            aspect="aspect-[4/5]"
+            sizes="(min-width: 640px) 220px, 50vw"
+            position={slot.position}
+            className="rounded-xl"
+          />
+        );
+      })}
+    </div>
   );
 }
 

@@ -59,9 +59,13 @@ export type Achievement = {
 
 export type Milestone = {
   id: string;
+  /** Short label, e.g. "Stage 3" (also used as the badge). */
   label: string;
-  status: "achieved" | "goal";
-  date?: string;
+  title: string;
+  status: "achieved" | "current" | "upcoming";
+  /** ISO dates. */
+  start: string;
+  end: string;
 };
 
 export type BlackHatJourney = {
@@ -82,6 +86,8 @@ export type TimelineEntry = {
   title: string;
   org?: string;
   body?: string;
+  /** Photos shown side by side inside this entry. */
+  photos?: MediaSlot[];
   /** Shows a certificate (by id from certifications.ts) inside this entry. */
   certificationId?: string;
 };

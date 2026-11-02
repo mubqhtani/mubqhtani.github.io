@@ -11,7 +11,7 @@ type Highlight = { href: string; badge: string; title: string; meta: string; ong
 
 /** The summary visitors see first; every row links to its full entry. */
 function getHighlights(): Highlight[] {
-  const current = blackHat.milestones.filter((m) => m.status === "achieved").at(-1);
+  const current = blackHat.milestones.find((m) => m.status === "current");
   return [
     ...achievements.map((a) => ({
       href: `#${a.id}`,
