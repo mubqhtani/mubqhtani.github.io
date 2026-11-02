@@ -1,4 +1,3 @@
-import { ArrowDown, Check, CornerDownRight, CornerUpRight, Flag, Trophy } from "lucide-react";
 import type { TimelineStep } from "@/data/types";
 import { formatDate, formatRange } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -15,18 +14,51 @@ type EventTimelineProps = {
   children?: React.ReactNode;
 };
 
-function StepIcon({ step, last }: { step: TimelineStep; last: boolean }) {
-  if (step.status === "done") return <Check className="size-4 shrink-0 text-accent" strokeWidth={2.5} aria-hidden />;
-  if (step.status === "won") return <Trophy className="size-4 shrink-0" aria-hidden />;
-  if (step.status === "current") return <span aria-hidden className="m-1 size-2 shrink-0 rounded-full bg-accent" />;
-  return last ? <Flag className="size-4 shrink-0" aria-hidden /> : null;
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const DAY = 86_400_000;
+
+/** Whole days since the epoch, so positions don't depend on the time zone. */
+function toDay(iso: string) {
+  const [y, m, d] = iso.split("-").map(Number);
+  return Date.UTC(y, m - 1, d) / DAY;
 }
 
+/** One time scale for a whole chart, starting on the first of a month. */
+function buildScale(steps: TimelineStep[]) {
+  const [y, m] = steps[0].start.split("-").map(Number);
+  const min = Date.UTC(y, m - 1, 1) / DAY;
+  const last = Math.max(...steps.map((s) => toDay(s.end ?? s.start)));
+  const max = last + 1 + Math.ceil((last - min) * 0.03);
+
+  const ticks: { label: string; at: number }[] = [];
+  for (let i = 0; ; i++) {
+    const date = new Date(Date.UTC(y, m - 1 + i, 1));
+    const day = date.getTime() / DAY;
+    if (day > max) break;
+    ticks.push({ label: MONTHS[date.getUTCMonth()], at: ((day - min) / (max - min)) * 100 });
+  }
+  return { ticks, at: (day: number) => ((day - min) / (max - min)) * 100 };
+}
+
+const LEGEND: Record<TimelineStep["status"], { label: string; mark: string }> = {
+  done: { label: "Finished", mark: "bg-muted/45" },
+  current: { label: "Now", mark: "bg-accent" },
+  won: { label: "Won", mark: "mx-1 !w-2 rotate-45 bg-accent" },
+  upcoming: { label: "Not reached yet", mark: "ring-1 ring-inset ring-muted/60" },
+};
+
 /**
- * The timeline card used by every competition: boxes that step up and down
- * with elbow arrows between them. Stacks below 1024px.
+ * The timeline card used by every competition: a small Gantt chart on a true
+ * time scale. Bars are multi-day steps, diamonds are single days, and the one
+ * step that matters most is the only one in the accent color.
  */
 export function EventTimeline({ id, title, badge, ongoing, meta, steps, children }: EventTimelineProps) {
+  const { ticks, at } = buildScale(steps);
+  const statuses = [...new Set(steps.map((s) => s.status))];
+  const gridlines = ticks.map((t) => (
+    <span key={t.label} aria-hidden className="absolute inset-y-0 w-px bg-line" style={{ left: `${t.at}%` }} />
+  ));
+
   return (
     <article
       id={id}
@@ -43,66 +75,69 @@ export function EventTimeline({ id, title, badge, ongoing, meta, steps, children
         </div>
       </div>
 
-      <ol className="mt-8 flex flex-col lg:grid lg:grid-cols-5 lg:grid-rows-2 lg:gap-3">
-        {steps.map((step, i) => {
-          const next = steps[i + 1];
-          const top = i % 2 === 0;
-          const Elbow = top ? CornerDownRight : CornerUpRight;
-          const highlighted = step.status === "current" || step.status === "won";
+      <div className="mt-7 md:grid md:grid-cols-[19rem_1fr] md:gap-x-6">
+        <div aria-hidden className="relative col-start-2 h-5 text-xs text-muted">
+          {ticks.map((t) => (
+            <span
+              key={t.label}
+              className={cn("absolute top-0 whitespace-nowrap", t.at > 90 && "-translate-x-full")}
+              style={{ left: `${t.at}%` }}
+            >
+              {t.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <ol>
+        {steps.map((step) => {
+          const when = step.end ? formatRange(step.start, step.end) : formatDate(step.start);
+          const start = toDay(step.start);
+          const key = step.status === "current" || step.status === "won";
           const upcoming = step.status === "upcoming";
+          const fill = key ? "bg-accent" : upcoming ? "bg-surface ring-1 ring-inset ring-muted/60" : "bg-muted/45";
           return (
-            <li key={step.id} className="relative" style={{ gridColumn: i + 1, gridRow: top ? 1 : 2 }}>
-              <div
-                className={cn(
-                  "flex h-full flex-col justify-center rounded-xl px-4 py-3.5",
-                  highlighted && "bg-accent-soft text-accent",
-                  step.status === "done" && "bg-bg ring-1 ring-line ring-inset",
-                  upcoming && "text-muted ring-1 ring-line ring-inset",
-                )}
-              >
-                {step.label ? (
-                  <>
-                    <p className="flex items-center gap-1.5 text-sm font-medium">
-                      <StepIcon step={step} last={!next} />
-                      {step.label}
-                      {step.status === "current" && " · Now"}
-                      {upcoming && <span className="sr-only"> (not reached yet)</span>}
-                    </p>
-                    <p className="mt-1 font-medium leading-snug">{step.title}</p>
-                  </>
-                ) : (
-                  <p className={cn("flex items-center gap-1.5 font-medium leading-snug", highlighted && "font-semibold")}>
-                    <StepIcon step={step} last={!next} />
-                    {step.title}
-                  </p>
-                )}
-                <p className={cn("tabular mt-1 text-sm", !highlighted && "text-muted")}>
-                  <time dateTime={step.start}>
-                    {step.end ? formatRange(step.start, step.end) : formatDate(step.start)}
-                  </time>
+            <li key={step.id} className="md:grid md:grid-cols-[19rem_1fr] md:gap-x-6">
+              <div className="pb-1.5 pt-3 md:py-2.5">
+                <p className={cn("leading-snug", key ? "font-semibold" : "font-medium", upcoming && "text-muted")}>
+                  {step.title}
+                </p>
+                <p className="tabular mt-0.5 text-sm text-muted">
+                  {step.label && `${step.label} · `}
+                  {step.status === "current" && "Now · "}
+                  <time dateTime={step.start}>{when}</time>
+                  {upcoming && <span className="sr-only"> (not reached yet)</span>}
                 </p>
               </div>
-              {next && (
-                <>
-                  <span aria-hidden className="grid place-items-center py-2 text-muted lg:hidden">
-                    <ArrowDown className="size-4" strokeWidth={1.5} />
-                  </span>
+              <div aria-hidden className="relative h-6 md:h-auto">
+                {gridlines}
+                {step.end ? (
                   <span
-                    aria-hidden
-                    className={cn(
-                      "absolute inset-x-0 hidden h-full place-items-center lg:grid",
-                      top ? "top-[calc(100%+0.75rem)]" : "bottom-[calc(100%+0.75rem)]",
-                      next.status === "upcoming" ? "text-muted" : "text-accent",
-                    )}
-                  >
-                    <Elbow className="size-8" strokeWidth={1.25} />
-                  </span>
-                </>
-              )}
+                    title={`${step.title}: ${when}`}
+                    className={cn("absolute top-1/2 h-3 min-w-2 -translate-y-1/2 rounded-[4px]", fill)}
+                    style={{ left: `${at(start)}%`, width: `${at(toDay(step.end) + 1) - at(start)}%` }}
+                  />
+                ) : (
+                  <span
+                    title={`${step.title}: ${when}`}
+                    className={cn("absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[2px]", fill)}
+                    style={{ left: `${at(start + 0.5)}%` }}
+                  />
+                )}
+              </div>
             </li>
           );
         })}
       </ol>
+
+      <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted">
+        {statuses.map((status) => (
+          <li key={status} className="flex items-center gap-2">
+            <span aria-hidden className={cn("h-2 w-4 rounded-[2px]", LEGEND[status].mark)} />
+            {LEGEND[status].label}
+          </li>
+        ))}
+      </ul>
       {children}
     </article>
   );
