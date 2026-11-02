@@ -190,7 +190,7 @@ Scale:
 3. **About** (`#about`) — two short paragraphs + "What's next" (5 goals).
 4. **Learning** (`#learning`) — timeline: Tuwaiq Academy (24 Aug 2025 – 25 Jun 2026) → Project showcase at Tuwaiq Academy (20 Nov 2025, two photos) → PCEP (3 Jun 2026, with certificate image, ID and verify link) → Software development / engineering / data science (23 Aug 2026 – Present, marked "Now").
 5. **Skills** (`#skills`) — Security · Programming · Software · AI & data · Practice platforms, as chips.
-6. **Projects** (`#projects`) — Titanic Survival Prediction (capstone, 2026; figures from the repo's `report.md`, link to source code).
+6. **Projects** (`#projects`) — Titanic Survival Prediction (capstone, submitted 3 Jun 2026; figures from the repo's `report.md`, link to source code).
 7. **Contact** (`#contact`) — Email, X, Instagram.
 8. Footer.
 

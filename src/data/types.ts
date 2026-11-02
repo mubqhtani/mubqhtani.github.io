@@ -114,8 +114,8 @@ export type Project = {
   id: string;
   title: string;
   summary: string;
-  /** e.g. "2026" */
-  year?: string;
+  /** ISO date (YYYY-MM-DD). */
+  date?: string;
   /** Only technologies actually used. */
   tech: string[];
   image?: MediaSlot;

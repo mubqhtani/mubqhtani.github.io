@@ -1,6 +1,7 @@
 import { Photo } from "@/components/ui/Lightbox";
 import { projects } from "@/data/projects";
 import { resolveMedia } from "@/lib/assets";
+import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { Section } from "./Section";
 
@@ -28,7 +29,11 @@ export function Projects() {
                 <h3 id={`${p.id}-title`} className="font-display text-xl font-semibold tracking-[-0.015em]">
                   {p.title}
                 </h3>
-                {p.year && <p className="tabular text-sm text-muted">{p.year}</p>}
+                {p.date && (
+                  <p className="tabular shrink-0 text-sm text-muted">
+                    <time dateTime={p.date}>{formatDate(p.date)}</time>
+                  </p>
+                )}
               </div>
               <p className="measure mt-2 text-[15px] leading-relaxed text-muted">{p.summary}</p>
               {p.tech.length > 0 && (
