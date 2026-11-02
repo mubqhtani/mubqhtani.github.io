@@ -190,8 +190,8 @@ Scale:
 3. **About** (`#about`) — two short paragraphs + "What's next" (5 goals).
 4. **Learning** (`#learning`) — timeline: Tuwaiq Academy (24 Aug 2025 – 25 Jun 2026) → Project showcase at Tuwaiq Academy (20 Nov 2025, two photos) → PCEP (3 Jun 2026, with certificate image, ID and verify link) → Software development / engineering / data science (23 Aug 2026 – Present, marked "Now").
 5. **Skills** (`#skills`) — Security · Programming · Software · AI & data · Practice platforms, as chips.
-6. **Projects** (`#projects`) — **hidden** (no projects yet).
-7. **Contact** (`#contact`) — **hidden** (no links yet).
+6. **Projects** (`#projects`) — Titanic Survival Prediction (capstone, 2026; figures from the repo's `report.md`, link to source code).
+7. **Contact** (`#contact`) — Email, X, Instagram.
 8. Footer.
 
 Nav items are built in `src/lib/site.ts`; Projects/Contact links appear automatically once those sections have content.
@@ -199,12 +199,12 @@ Nav items are built in `src/lib/site.ts`; Projects/Contact links appear automati
 ### 6.2 Where content lives (`src/data/`)
 | File | Contents |
 |---|---|
-| `profile.ts` | Name, age, location, school, role line, intro, About paragraphs, goals, portrait slot, `socials` (email/GitHub/LinkedIn — all without `href` today), copyright year |
+| `profile.ts` | Name, age, location, school, role line, intro, About paragraphs, goals, portrait slot, `socials` (email, X and Instagram have an `href`; GitHub and LinkedIn are hidden until they do), copyright year |
 | `achievements.ts` | `achievements[]` (order = display order; first is wide, next two side by side) and `blackHat` (milestones) |
 | `education.ts` | Learning timeline entries (`certificationId` links an entry to a certificate) |
 | `certifications.ts` | PCEP: code, title, issuer, date, image, `verifyUrl` (`https://verify.openedg.org/`), `credentialId` (`ZoPj.rFHx.mcwQ`, printed on the certificate) |
 | `skills.ts` | Skill groups (no levels/percentages by design) |
-| `projects.ts` | `projects[]` — empty; template in the file comment |
+| `projects.ts` | `projects[]`; template in the file comment |
 | `types.ts` | TypeScript types for all of the above |
 
 All strings are plain English. Fields: `rank` (badge text), `placement`, `context`, `prize`, `note`, `image` (`{ src, alt, position? }`), `gallery` (`{ folder, alt }`), optional `date` and `project`.
@@ -328,7 +328,7 @@ The owner explicitly rejected "AI slop". Keep it that way.
 4. Hackathon dates (the Mobility cheque shows 19/05 with the year hidden).
 4a. Is Waffir (the project on the showcase screen) his project? The screen lists Figma and "Waffir Model". Not claimed on the site until confirmed.
 4b. Black Hat Stage 1 is listed as ending 30 Sep, after Stage 2 ends on 24 Sep. Used as supplied; confirm the date.
-5. Contact links (email / GitHub / LinkedIn) to publish.
+5. GitHub and LinkedIn links, if he wants them in Contact. The capstone repo is under the account `qhtanI`, which differs from the site's `mubqhtani`.
 6. Optional portrait photo.
 
 **Known technical notes**

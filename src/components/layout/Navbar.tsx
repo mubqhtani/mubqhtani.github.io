@@ -95,7 +95,7 @@ export function Navbar({ wordmark, items }: NavbarProps) {
       )}
     >
       <div className="container-x flex h-16 items-center justify-between gap-6">
-        <a href="#top" className="font-display text-[17px] font-semibold tracking-[-0.01em]" onClick={() => setOpen(false)}>
+        <a href="#top" className="shrink-0 whitespace-nowrap font-display text-[17px] font-semibold tracking-[-0.01em]" onClick={() => setOpen(false)}>
           {wordmark}
         </a>
 
@@ -107,7 +107,7 @@ export function Navbar({ wordmark, items }: NavbarProps) {
                   href={`#${item.id}`}
                   aria-current={active === item.id ? "true" : undefined}
                   className={cn(
-                    "rounded-full px-3.5 py-2 text-[14px] font-medium transition-colors",
+                    "rounded-full px-2.5 py-2 text-[14px] font-medium transition-colors lg:px-3.5",
                     active === item.id ? "bg-surface text-fg ring-1 ring-line" : "text-muted hover:text-fg",
                   )}
                 >

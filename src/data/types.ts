@@ -21,7 +21,7 @@ export type GallerySlot = {
   alt: string;
 };
 
-export type SocialId = "email" | "github" | "linkedin" | "hackthebox" | "portswigger" | "x" | "website";
+export type SocialId = "email" | "github" | "linkedin" | "hackthebox" | "portswigger" | "x" | "instagram" | "website";
 
 export type SocialLink = {
   id: SocialId;

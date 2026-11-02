@@ -8,7 +8,9 @@ import type { MediaSlot, SocialLink } from "./types";
  *   github:   href: "https://github.com/username", handle: "@username"
  */
 const socials: SocialLink[] = [
-  { id: "email", label: "Email" },
+  { id: "email", label: "Email", href: "mailto:qhtaniwork@gmail.com", handle: "qhtaniwork@gmail.com" },
+  { id: "x", label: "X", href: "https://x.com/qhtcs", handle: "@qhtcs" },
+  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/0x1f9/", handle: "@0x1f9" },
   { id: "github", label: "GitHub" },
   { id: "linkedin", label: "LinkedIn" },
 ];

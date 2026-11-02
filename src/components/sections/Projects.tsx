@@ -1,6 +1,7 @@
 import { Photo } from "@/components/ui/Lightbox";
 import { projects } from "@/data/projects";
 import { resolveMedia } from "@/lib/assets";
+import { cn } from "@/lib/utils";
 import { Section } from "./Section";
 
 /** Only rendered once src/data/projects.ts has entries. */
@@ -9,7 +10,7 @@ export function Projects() {
 
   return (
     <Section id="projects" title="Projects">
-      <div className="grid gap-14 sm:grid-cols-2 sm:gap-8">
+      <div className={cn("grid gap-14", projects.length > 1 && "sm:grid-cols-2 sm:gap-8")}>
         {projects.map((p) => {
           const image = p.image && resolveMedia(p.image);
           return (
