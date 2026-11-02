@@ -2,8 +2,8 @@ import { Gallery, Photo } from "@/components/ui/Lightbox";
 import { achievements, blackHat } from "@/data/achievements";
 import type { Achievement } from "@/data/types";
 import { resolveGallery, resolveMedia } from "@/lib/assets";
-import { formatDate, formatSAR } from "@/lib/format";
-import { EventPass } from "./EventPass";
+import { formatSAR } from "@/lib/format";
+import { EventLine } from "./EventLine";
 import { Section } from "./Section";
 
 export function Achievements() {
@@ -20,7 +20,7 @@ export function Achievements() {
             ))}
           </div>
         )}
-        <Passes />
+        <Competitions />
       </div>
     </Section>
   );
@@ -63,37 +63,31 @@ function Entry({ a, wide }: { a: Achievement; wide?: boolean }) {
   );
 }
 
-function Passes() {
+function Competitions() {
   const { steps } = blackHat;
-  const current = steps.findIndex((s) => s.status === "current");
+  const current = steps.find((s) => s.status === "current");
   return (
-    <div className="grid gap-6 md:grid-cols-2">
+    <div className="space-y-12">
       {achievements.map(
         (a) =>
           a.timeline && (
-            <EventPass
+            <EventLine
               key={a.id}
-              id={`${a.id}-pass`}
+              id={`${a.id}-line`}
               title={a.name}
-              context={a.context?.split(" · ").at(-1)}
-              score={a.rank}
-              scoreRest="place"
-              detail={[a.date && `Won ${formatDate(a.date)}`, a.prize && formatSAR(a.prize.amount)].filter(Boolean).join(" · ")}
+              meta={[a.placement, a.prize && formatSAR(a.prize.amount)].filter(Boolean).join(" · ")}
               steps={a.timeline}
             />
           ),
       )}
-      <EventPass
+      <EventLine
         id={blackHat.id}
         title={blackHat.name}
-        context={blackHat.location}
-        score={String(current + 1)}
-        scoreRest={`of ${steps.length}`}
-        detail={`${steps[current].label} · In progress`}
+        meta={`${current?.label} of ${steps.length} · ${blackHat.location}`}
         steps={steps}
       >
         <Gallery images={resolveGallery(blackHat.gallery)} title="More photos" />
-      </EventPass>
+      </EventLine>
     </div>
   );
 }

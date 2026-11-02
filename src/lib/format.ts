@@ -18,15 +18,6 @@ export function formatMonth(iso: string): string {
   return `${MONTHS[m]} ${y}`;
 }
 
-/** "13–24 Sep 2026" or "14 Aug – 30 Sep 2026" */
-export function formatRange(start: string, end: string): string {
-  const a = parse(start);
-  const b = parse(end);
-  if (a.y === b.y && a.m === b.m) return `${a.d}–${b.d} ${MONTHS[b.m]} ${b.y}`;
-  if (a.y === b.y) return `${a.d} ${MONTHS[a.m]} – ${b.d} ${MONTHS[b.m]} ${b.y}`;
-  return `${formatDate(start)} – ${formatDate(end)}`;
-}
-
 /** "2 Apr", "13–24 Sep" or "24 Apr – 2 May", with the year on request. */
 export function formatDayRange(start: string, end: string | undefined, withYear: boolean): string {
   const a = parse(start);
