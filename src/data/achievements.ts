@@ -65,12 +65,13 @@ export const blackHat: BlackHatJourney = {
   name: "Black Hat Bug Bounty Jr.",
   location: "Malham, Riyadh",
   // Dates are the programme's published dates. Move `current` forward as stages are reached.
+  // Stages 4 and 5 were postponed in Nov 2026: the originals stay, `postponed` holds the new dates.
   steps: [
     { id: "stage-1", label: "Stage 1", title: "Cybersecurity Fundamentals", status: "done", start: "2026-08-14", end: "2026-09-30" },
     { id: "stage-2", label: "Stage 2", title: "Introduction to Cybersecurity", status: "done", start: "2026-09-13", end: "2026-09-24" },
-    { id: "stage-3", label: "Stage 3", title: "Introduction to Vulnerability Discovery", status: "current", start: "2026-10-11", end: "2026-11-05" },
-    { id: "stage-4", label: "Stage 4", title: "Competition Preparation Camp", status: "upcoming", start: "2026-11-22", end: "2026-11-30" },
-    { id: "stage-5", label: "Stage 5", title: "Competition at Black Hat", status: "upcoming", start: "2026-12-01", end: "2026-12-03" },
+    { id: "stage-3", label: "Stage 3", title: "Introduction to Vulnerability Discovery", status: "done", start: "2026-10-11", end: "2026-11-05" },
+    { id: "stage-4", label: "Stage 4", title: "Competition Preparation Camp", status: "upcoming", start: "2026-11-22", end: "2026-11-30", postponed: {} },
+    { id: "stage-5", label: "Stage 5", title: "Competition at Black Hat", status: "upcoming", start: "2026-12-01", end: "2026-12-03", postponed: { start: "2027-05-31", end: "2027-06-02" } },
   ],
   gallery: { folder: "/images/achievements/black-hat-bug-bounty-jr/gallery", alt: "Black Hat Bug Bounty Jr." },
 };

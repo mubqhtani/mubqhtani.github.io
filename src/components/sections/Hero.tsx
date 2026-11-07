@@ -4,7 +4,7 @@ import { achievements, blackHat } from "@/data/achievements";
 import { certifications } from "@/data/certifications";
 import { profile } from "@/data/profile";
 import { resolveMedia } from "@/lib/assets";
-import { formatMonth, formatSAR } from "@/lib/format";
+import { formatDate, formatMonth, formatSAR } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 type Highlight = { href: string; badge: string; title: string; meta: string; ongoing?: boolean };
@@ -12,6 +12,15 @@ type Highlight = { href: string; badge: string; title: string; meta: string; ong
 /** The summary visitors see first; every row links to its full entry. */
 function getHighlights(): Highlight[] {
   const current = blackHat.steps.find((s) => s.status === "current");
+  const lastDone = blackHat.steps.findLast((s) => s.status === "done");
+  const final = blackHat.steps.at(-1);
+  const finalStart = final?.postponed?.start ?? final?.start;
+  // While between stages, show the last finished stage and when the final is.
+  const blackHatRow = current
+    ? { badge: current.label ?? "Now", meta: "In progress" }
+    : lastDone && finalStart
+      ? { badge: lastDone.label ?? "Now", meta: `Final: ${formatDate(finalStart)}` }
+      : null;
   return [
     ...achievements.map((a) => ({
       href: `#${a.id}`,
@@ -20,9 +29,7 @@ function getHighlights(): Highlight[] {
       // Keep each row to one line: the prize if there is one, otherwise the context.
       meta: a.prize ? formatSAR(a.prize.amount) : (a.context ?? ""),
     })),
-    ...(current
-      ? [{ href: `#${blackHat.id}`, badge: current.label ?? "Now", title: blackHat.name, meta: "In progress", ongoing: true }]
-      : []),
+    ...(blackHatRow ? [{ href: `#${blackHat.id}`, title: blackHat.name, ongoing: true, ...blackHatRow }] : []),
     ...certifications.map((c) => ({
       href: "#learning",
       badge: c.code,

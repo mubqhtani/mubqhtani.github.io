@@ -66,6 +66,7 @@ function Entry({ a, wide }: { a: Achievement; wide?: boolean }) {
 function Competitions() {
   const { steps } = blackHat;
   const current = steps.find((s) => s.status === "current");
+  const done = steps.filter((s) => s.status === "done").length;
   return (
     <div className="space-y-12">
       {achievements.map(
@@ -83,7 +84,7 @@ function Competitions() {
       <EventLine
         id={blackHat.id}
         title={blackHat.name}
-        meta={`${current?.label} of ${steps.length} · ${blackHat.location}`}
+        meta={`${current ? `${current.label} of ${steps.length}` : `${done} of ${steps.length} stages completed`} · ${blackHat.location}`}
         steps={steps}
       >
         <Gallery images={resolveGallery(blackHat.gallery)} title="More photos" />

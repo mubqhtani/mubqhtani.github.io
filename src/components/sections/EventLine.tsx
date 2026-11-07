@@ -21,19 +21,24 @@ export function StepLine({ steps }: { steps: TimelineStep[] }) {
       {steps.map((step, i) => {
         const next = steps[i + 1];
         const key = step.status === "current" || step.status === "won";
-        const upcoming = step.status === "upcoming";
+        const moved = step.postponed;
+        const upcoming = step.status === "upcoming" && !moved;
+        const last = i === steps.length - 1;
         return (
           <li
             key={step.id}
             aria-current={step.status === "current" ? "step" : undefined}
-            className="relative pb-4 ps-7 last:pb-0 md:pb-0 md:pe-3.5 md:ps-0"
+            className="relative pb-5 ps-7 last:pb-0 md:pb-0 md:pe-3.5 md:ps-0"
           >
             {next && (
               <span
                 aria-hidden
                 className={cn(
-                  "absolute bottom-0 start-[7px] top-2 w-0.5 md:bottom-auto md:end-0 md:start-0 md:top-[7px] md:h-0.5 md:w-auto",
-                  next.status === "upcoming" ? "bg-line" : "bg-fg",
+                  "absolute bottom-0 start-[7px] top-2 md:bottom-auto md:end-0 md:start-0 md:top-[7px]",
+                  // A postponed stop is reached by a dashed line: the programme is on hold there.
+                  next.postponed
+                    ? "w-0 border-s-2 border-dashed border-warn/45 md:h-0 md:w-auto md:border-s-0 md:border-t-2"
+                    : cn("w-0.5 md:h-0.5 md:w-auto", next.status === "upcoming" ? "bg-line" : "bg-fg"),
                 )}
               />
             )}
@@ -44,6 +49,7 @@ export function StepLine({ steps }: { steps: TimelineStep[] }) {
                 step.status === "done" && "bg-fg",
                 key && "bg-accent ring-[5px] ring-accent-soft",
                 upcoming && "bg-bg ring-2 ring-inset ring-muted/40",
+                moved && "border-2 border-dashed border-warn bg-warn-soft",
               )}
             />
             <span
@@ -56,9 +62,27 @@ export function StepLine({ steps }: { steps: TimelineStep[] }) {
               {step.title}
               {upcoming && <span className="sr-only"> (not reached yet)</span>}
             </span>
-            <time dateTime={step.start} className="tabular block text-[13px] text-muted">
-              {step.dateLabel ?? formatDayRange(step.start, step.end, i === steps.length - 1)}
-            </time>
+            {moved ? (
+              <>
+                <span className="sr-only"> (postponed)</span>
+                {/* The dashed line and ring say "postponed"; the new date, if any, sits above the struck original. */}
+                {moved.start && (
+                  <time dateTime={moved.start} className="tabular block text-[13px] font-medium text-warn">
+                    {formatDayRange(moved.start, moved.end, true)}
+                  </time>
+                )}
+                <span className="tabular block text-[13px] text-muted">
+                  <span className="sr-only">Originally </span>
+                  <del className="decoration-muted/70">
+                    <time dateTime={step.start}>{formatDayRange(step.start, step.end, true)}</time>
+                  </del>
+                </span>
+              </>
+            ) : (
+              <time dateTime={step.start} className="tabular block text-[13px] text-muted">
+                {step.dateLabel ?? formatDayRange(step.start, step.end, last)}
+              </time>
+            )}
           </li>
         );
       })}

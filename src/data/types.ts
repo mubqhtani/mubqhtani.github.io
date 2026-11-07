@@ -45,6 +45,12 @@ export type TimelineStep = {
   end?: string;
   /** Shown instead of the dates when only the years are known. */
   dateLabel?: string;
+  /**
+   * Set when the organisers postpone a step. `start`/`end` above stay as the
+   * original dates (shown struck through); these are the new ones. Leave them
+   * out while new dates haven't been announced.
+   */
+  postponed?: { start?: string; end?: string };
 };
 
 export type Achievement = {
