@@ -18,7 +18,8 @@ const credit = profile.character.credit ? `Art: ${profile.character.credit.name}
  */
 export function HeroArt({ image, className }: Props & { className?: string }) {
   return (
-    <figure className={cn("relative w-full md:ms-auto md:max-w-[27rem]", className)}>
+    // Position and size come from the caller (it differs between phone and laptop).
+    <figure className={cn("m-0", className)}>
       <div className="relative aspect-[3/4] mix-blend-lighten [mask-image:radial-gradient(ellipse_50%_50%_at_50%_46%,#000_42%,transparent_100%)]">
         <Image
           src={image.src}
@@ -26,7 +27,7 @@ export function HeroArt({ image, className }: Props & { className?: string }) {
           title={credit}
           fill
           preload
-          sizes="(min-width: 768px) 432px, (min-width: 640px) 176px, 120px"
+          sizes="(min-width: 768px) 432px, 60vw"
           className="object-cover"
         />
       </div>

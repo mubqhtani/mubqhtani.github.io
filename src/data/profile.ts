@@ -49,7 +49,7 @@ export const profile = {
 
   /** One line under the name: what he does. */
   role: "Software engineering student focused on web security",
-  intro: "I break web apps in CTFs and build real solutions at hackathons, with two first places so far.",
+  intro: "I study software engineering and data science, and spend most of my time learning how web applications work, and how to secure them.",
 
   /** About: a short paragraph in his own voice (one string per paragraph). */
   about: [
