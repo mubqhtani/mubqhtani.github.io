@@ -98,10 +98,10 @@ export function EventLine({ id, title, meta, steps, children }: EventLineProps) 
   return (
     <article id={id} aria-labelledby={`${id}-title`} className="scroll-mt-24">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-        <h3 id={`${id}-title`} className="font-display text-xl font-semibold tracking-[-0.015em] md:text-2xl">
+        <h3 id={`${id}-title`} className="font-display text-[1.75rem] leading-tight tracking-[-0.01em] md:text-[2rem]">
           {title}
         </h3>
-        <p className="tabular text-[15px] text-muted">{meta}</p>
+        <p className="tabular font-mono text-[13px] text-muted">{meta}</p>
       </div>
       <div className="mt-6">
         <StepLine steps={steps} />

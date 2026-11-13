@@ -32,24 +32,29 @@ export const profile = {
     alt: "Mubarak Al-Qahtani",
   } satisfies MediaSlot,
 
+  /**
+   * The character beside the name in the hero: public/images/profile/character.jpg.
+   * To swap it, replace that file (keep only one character.* file) and update
+   * `alt` and `credit` so the artist's name shows in the corner.
+   */
+  character: {
+    src: "/images/profile/character",
+    alt: "Oil painting of Pepe the Frog as a monk holding a glass of wine",
+    /** The artist, credited in the painting's hover tooltip. */
+    credit: {
+      name: "Pepelangelo",
+      href: "https://pepelangelo.com/",
+    } as { name: string; href?: string } | undefined,
+  },
+
   /** One line under the name: what he does. */
-  role: "Student developer and web security learner",
-  intro:
-    "I study software engineering and data science, and spend much of my free time on web application security. I like testing what I learn in hackathons and CTFs.",
+  role: "Software engineering student focused on web security",
+  intro: "I break web apps in CTFs and build real solutions at hackathons, with two first places so far.",
 
+  /** About: a short paragraph in his own voice (one string per paragraph). */
   about: [
-    "I'm 16 and live in Riyadh. During the 2025–26 school year I studied Python, machine learning and the basics of data science in person at Tuwaiq Academy, and I'm now continuing with software development, software engineering and data science.",
-    "I practice web security through labs and challenges on Hack\u00A0The\u00A0Box and PortSwigger Web Security Academy.",
-  ],
-
-  goals: [
-    "Reach the Black Hat Bug Bounty Jr. finals and compete for first place",
-    "Build national solutions that benefit Saudi Arabia",
-    "Contribute to Saudi Arabia's cybersecurity",
-    "Build and publish meaningful software projects",
-    "Go deeper in web application security and programming",
-    "Keep learning AI and data science",
-    "Compete in more advanced technical competitions",
+    "I'm Mubarak, a 16-year-old from Riyadh. I started with Python and machine learning at Tuwaiq Academy, and I'm now studying software engineering and data science. Most of my free time goes into web security: understanding how web apps work, and how they can be broken, on Hack\u00A0The\u00A0Box and PortSwigger.",
+    "Next, I want to win the Black Hat Bug Bounty Jr. final, build software that serves Saudi Arabia, and keep going deeper into security and AI.",
   ],
 
   socials,

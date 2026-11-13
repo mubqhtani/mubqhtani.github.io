@@ -97,8 +97,13 @@ export function Navbar({ wordmark, items, linkPrefix = "" }: NavbarProps) {
       )}
     >
       <div className="container-x flex h-16 items-center justify-between gap-6">
-        <a href={`${linkPrefix}#top`} className="shrink-0 whitespace-nowrap font-display text-[17px] font-semibold tracking-[-0.01em]" onClick={() => setOpen(false)}>
-          {wordmark}
+        <a
+          href={`${linkPrefix}#top`}
+          className="shrink-0 whitespace-nowrap font-mono text-[13px] font-semibold uppercase tracking-[0.18em]"
+          onClick={() => setOpen(false)}
+        >
+          {wordmark.split(" ")[0]}
+          <span className="text-accent">_</span>
         </a>
 
         <nav aria-label="Primary" className="hidden md:block">
@@ -109,8 +114,8 @@ export function Navbar({ wordmark, items, linkPrefix = "" }: NavbarProps) {
                   href={`${linkPrefix}#${item.id}`}
                   aria-current={active === item.id ? "true" : undefined}
                   className={cn(
-                    "rounded-full px-2.5 py-2 text-[14px] font-medium transition-colors lg:px-3.5",
-                    active === item.id ? "bg-surface text-fg ring-1 ring-line" : "text-muted hover:text-fg",
+                    "px-2 py-2 font-mono text-[12.5px] transition-colors lg:px-3",
+                    active === item.id ? "text-accent" : "text-muted hover:text-fg",
                   )}
                 >
                   {item.label}
@@ -142,7 +147,7 @@ export function Navbar({ wordmark, items, linkPrefix = "" }: NavbarProps) {
                   <a
                     href={`${linkPrefix}#${item.id}`}
                     onClick={() => setOpen(false)}
-                    className="block py-4 font-display text-2xl font-semibold"
+                    className="block py-4 font-display text-3xl"
                   >
                     {item.label}
                   </a>

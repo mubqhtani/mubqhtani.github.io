@@ -45,10 +45,10 @@ function Entry({ a, wide }: { a: Achievement; wide?: boolean }) {
       <div className="mt-5 flex items-start gap-4">
         <span className="badge mt-0.5">{a.rank}</span>
         <div className="min-w-0">
-          <h3 id={`${a.id}-title`} className="font-display text-xl font-semibold tracking-[-0.015em] md:text-2xl">
+          <h3 id={`${a.id}-title`} className="font-display text-[1.75rem] leading-tight tracking-[-0.01em] md:text-[2rem]">
             {a.name}
           </h3>
-          {meta && <p className="tabular mt-1 text-[15px] text-muted">{meta}</p>}
+          {meta && <p className="tabular mt-2 font-mono text-[13px] text-muted">{meta}</p>}
           {a.note && <p className="measure mt-3 text-[15px] leading-relaxed text-muted">{a.note}</p>}
           {a.project?.summary && <p className="measure mt-3 text-[15px] text-muted">{a.project.summary}</p>}
           {a.project?.href && (

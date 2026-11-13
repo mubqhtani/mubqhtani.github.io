@@ -48,7 +48,7 @@ export function Contact() {
                 target={isEmail ? undefined : "_blank"}
                 rel={isEmail ? undefined : "noopener noreferrer"}
                 className={cn(
-                  "group flex items-center gap-3.5 rounded-2xl bg-surface p-4 ring-1 ring-line transition-shadow hover:ring-accent/50",
+                  "group flex items-center gap-3.5 rounded-xl bg-surface p-4 ring-1 ring-line transition-shadow hover:ring-accent/50",
                   isEmail && "pr-13",
                 )}
               >

@@ -23,14 +23,14 @@ export const timeline: TimelineEntry[] = [
     end: "2026-06-25",
     title: "Tuwaiq Academy",
     org: "In person",
-    body: "Python programming, machine learning, an introduction to data science, NumPy and related Python libraries.",
+    body: "Python, machine learning, data science basics and NumPy.",
   },
   {
     id: "project-showcase",
     start: "2025-11-20",
     title: "Project showcase",
     org: "Tuwaiq Academy",
-    body: "We presented projects that used Python, data science and machine learning.",
+    body: "Presented our Python, data science and machine learning projects.",
     photos: [
       {
         src: "/images/learning/project-showcase-1",
@@ -46,7 +46,7 @@ export const timeline: TimelineEntry[] = [
     end: "2026-03-08",
     title: "Tuwaiqthon",
     org: "Tuwaiq Academy · Remote, then in person",
-    body: "My first competition. I didn't place, but I finished every stage and came out understanding how competitions really work. That's when I started working seriously, and two months later I won Defenseathon.",
+    body: "My first competition. No place, but I finished every stage and learned how competitions work. Two months later I won Defenseathon.",
     photos: [{ src: "/images/learning/tuwaiqthon", alt: "Illuminated Tuwaiqthon sign at the hackathon venue" }],
     // Dates from the hackathon's announcement.
     steps: [
@@ -67,7 +67,7 @@ export const timeline: TimelineEntry[] = [
     id: "continuing-studies",
     start: "2026-08-23",
     end: "present",
-    title: "Software development, software engineering & data science",
-    body: "Alongside this, I'm learning web security and bug hunting through hands-on labs and challenges.",
+    title: "Software engineering & data science",
+    body: "Plus web security and bug hunting through hands-on labs.",
   },
 ];

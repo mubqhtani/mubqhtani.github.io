@@ -1,5 +1,6 @@
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
+import { notes } from "@/data/notes";
 import { projects } from "@/data/projects";
 import { profile } from "@/data/profile";
 
@@ -15,6 +16,6 @@ export const nav = [
   { id: "skills", label: "Skills" },
   // These sections only exist once they have real content.
   ...(projects.length > 0 ? [{ id: "projects", label: "Projects" }] : []),
-  ...(hasArticles ? [{ id: "articles", label: "Articles" }] : []),
+  ...(hasArticles || notes.length > 0 ? [{ id: "articles", label: "Articles" }] : []),
   ...(profile.socials.some((s) => s.href) ? [{ id: "contact", label: "Contact" }] : []),
 ];

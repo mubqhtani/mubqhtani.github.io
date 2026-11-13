@@ -7,7 +7,7 @@ export default function NotFound() {
       <h1 className="section-title mt-2">This page doesn&apos;t exist.</h1>
       <Link
         href="/"
-        className="mt-8 inline-flex h-11 w-fit items-center rounded-full bg-fg px-5 text-[15px] font-medium text-white transition-colors hover:bg-accent"
+        className="mt-8 inline-flex h-11 w-fit items-center rounded-full bg-fg px-5 text-[15px] font-medium text-bg transition-colors hover:bg-accent"
       >
         Back to the home page
       </Link>

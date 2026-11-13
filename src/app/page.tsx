@@ -5,12 +5,14 @@ import { Achievements } from "@/components/sections/Achievements";
 import { Articles } from "@/components/sections/Articles";
 import { Contact } from "@/components/sections/Contact";
 import { Hero } from "@/components/sections/Hero";
+import { PageWash } from "@/components/sections/HeroArt";
 import { Learning } from "@/components/sections/Learning";
 import { Projects } from "@/components/sections/Projects";
 import { Skills } from "@/components/sections/Skills";
 import { achievements } from "@/data/achievements";
 import { certifications } from "@/data/certifications";
 import { profile } from "@/data/profile";
+import { resolveMedia } from "@/lib/assets";
 import { nav, siteUrl } from "@/lib/site";
 
 export default function Page() {
@@ -31,11 +33,15 @@ export default function Page() {
     sameAs: profile.socials.filter((s) => s.href && s.id !== "email").map((s) => s.href),
   };
 
+  const painting = resolveMedia(profile.character);
+
   return (
     <>
+      {painting && <PageWash image={painting} />}
+
       <a
         href="#main"
-        className="fixed start-4 top-2 z-50 -translate-y-20 rounded-full bg-fg px-4 py-2 text-sm font-medium text-white focus:translate-y-0"
+        className="fixed start-4 top-2 z-50 -translate-y-20 rounded-full bg-fg px-4 py-2 text-sm font-medium text-bg focus:translate-y-0"
       >
         Skip to content
       </a>

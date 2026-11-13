@@ -1,25 +1,14 @@
 import { profile } from "@/data/profile";
 import { Section } from "./Section";
 
+/** A short paragraph about him, in his own voice, at a comfortable reading size. */
 export function About() {
   return (
     <Section id="about" title="About">
-      <div className="grid gap-12 md:grid-cols-[1.4fr_1fr] md:gap-16">
-        <div className="measure space-y-5 text-[17px] leading-relaxed text-fg/90 [&>p:first-child]:text-xl [&>p:first-child]:text-fg">
-          {profile.about.map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
-        </div>
-        <div>
-          <h3 className="text-sm font-medium text-muted">What&apos;s next</h3>
-          <ul className="mt-3 divide-y divide-line border-y border-line">
-            {profile.goals.map((goal) => (
-              <li key={goal} className="py-3 text-[15px] leading-snug">
-                {goal}
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div className="max-w-[44rem] space-y-5 text-[clamp(1.125rem,1rem+0.4vw,1.3rem)] leading-[1.7] text-fg/85 text-pretty">
+        {profile.about.map((p) => (
+          <p key={p}>{p}</p>
+        ))}
       </div>
     </Section>
   );

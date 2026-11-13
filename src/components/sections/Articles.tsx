@@ -1,35 +1,93 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { notes } from "@/data/notes";
 import { getArticles } from "@/lib/articles";
+import { cn } from "@/lib/utils";
 import { Section } from "./Section";
 
-/** Only rendered once src/content/articles has at least one file. */
+type Entry = {
+  key: string;
+  title: string;
+  href: string;
+  /** Opens on another site (GitHub) instead of a page here. */
+  external: boolean;
+  lang: "ar" | "en";
+  /** Right-hand hint: reading time or where the link goes. */
+  hint: string;
+  date: string;
+};
+
+/**
+ * Articles hosted here plus write-ups that live on GitHub (src/data/notes.ts),
+ * newest first, as a plain list of titles. Only rendered once there is at
+ * least one of either.
+ */
 export function Articles() {
-  const articles = getArticles();
-  if (articles.length === 0) return null;
+  const entries: Entry[] = [
+    ...getArticles().map((a) => ({
+      key: a.slug,
+      title: a.title,
+      href: `/articles/${a.slug}/`,
+      external: false,
+      lang: a.lang,
+      hint: `${a.minutes} min`,
+      date: a.date ?? "",
+    })),
+    ...notes.map((n) => ({
+      key: n.href,
+      title: n.title,
+      href: n.href,
+      external: true,
+      lang: "en" as const,
+      hint: "GitHub",
+      date: n.date,
+    })),
+  ].sort((a, b) => b.date.localeCompare(a.date));
+
+  if (entries.length === 0) return null;
 
   return (
     <Section id="articles" title="Articles">
-      <ul className="grid gap-3">
-        {articles.map((article) => (
-          <li key={article.slug}>
-            <Link
-              href={`/articles/${article.slug}/`}
-              className="group flex flex-col-reverse gap-3 rounded-2xl bg-surface p-5 ring-1 ring-line transition-shadow hover:ring-accent/50 sm:flex-row sm:items-center sm:justify-between sm:gap-6 md:p-6"
-            >
-              <span className="flex shrink-0 items-center gap-2 text-sm text-muted">
-                <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" aria-hidden />
-                <span className="tabular">{article.minutes} min read</span>
+      <ul className="border-t border-line">
+        {entries.map((e) => {
+          // Title only: the link itself says where it goes.
+          const className = "group flex items-baseline justify-between gap-6 py-5";
+          const body = (
+            <>
+              <span
+                lang={e.lang}
+                dir={e.lang === "ar" ? "rtl" : "ltr"}
+                className={cn(
+                  "min-w-0 leading-snug transition-colors group-hover:text-accent",
+                  e.lang === "ar" ? "font-arabic text-xl font-semibold" : "font-display text-[1.6rem]",
+                )}
+              >
+                {e.title}
               </span>
-              <span lang="ar" dir="rtl" className="min-w-0 font-arabic">
-                <span className="block text-xl font-semibold leading-snug transition-colors group-hover:text-accent">
-                  {article.title}
-                </span>
-                <span className="mt-1 block text-[15px] leading-relaxed text-muted">{article.excerpt}</span>
+              <span className="label tabular flex shrink-0 items-center gap-1.5">
+                {e.hint}
+                {e.external ? (
+                  <ArrowUpRight className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
+                ) : (
+                  <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
+                )}
               </span>
-            </Link>
-          </li>
-        ))}
+            </>
+          );
+          return (
+            <li key={e.key} className="border-b border-line">
+              {e.external ? (
+                <a href={e.href} target="_blank" rel="noopener noreferrer" className={className}>
+                  {body}
+                </a>
+              ) : (
+                <Link href={e.href} className={className}>
+                  {body}
+                </Link>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </Section>
   );

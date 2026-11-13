@@ -6,7 +6,7 @@ import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { Section } from "./Section";
 
-const panel = "rounded-2xl bg-surface p-5 ring-1 ring-line md:p-6";
+const panel = "rounded-xl bg-surface p-5 ring-1 ring-line md:p-6";
 
 /** Only rendered once src/data/projects.ts has entries. */
 export function Projects() {
@@ -35,7 +35,7 @@ function ProjectRow({ project: p }: { project: Project }) {
       className="grid gap-6 py-10 first:pt-0 last:pb-0 lg:grid-cols-2 lg:gap-12"
     >
       <div className="min-w-0">
-        <h3 id={`${p.id}-title`} className="font-display text-xl font-semibold tracking-[-0.015em]">
+        <h3 id={`${p.id}-title`} className="font-display text-[1.75rem] leading-tight tracking-[-0.01em]">
           {p.title}
         </h3>
         {subtitle && <p className="tabular mt-0.5 text-[15px] text-fg/85">{subtitle}</p>}
@@ -43,7 +43,7 @@ function ProjectRow({ project: p }: { project: Project }) {
         {p.tech.length > 0 && (
           <ul className="mt-4 flex flex-wrap gap-2">
             {p.tech.map((t) => (
-              <li key={t} className="rounded-full bg-surface px-3 py-1 text-sm ring-1 ring-line">
+              <li key={t} className="chip">
                 {t}
               </li>
             ))}
@@ -74,7 +74,7 @@ function ProjectRow({ project: p }: { project: Project }) {
 function Results({ results }: { results: NonNullable<Project["results"]> }) {
   return (
     <figure className={cn("m-0", panel)}>
-      <figcaption className="font-display text-lg font-semibold tracking-[-0.01em]">{results.title}</figcaption>
+      <figcaption className="font-display text-2xl leading-tight">{results.title}</figcaption>
       <table className="mt-4 w-full border-collapse text-sm">
         <thead>
           <tr className="text-left text-muted">

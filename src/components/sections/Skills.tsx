@@ -1,32 +1,29 @@
+import { BrainCircuit, Code2, ShieldAlert } from "lucide-react";
 import { skills } from "@/data/skills";
 import { Section } from "./Section";
 
+const ICONS = { security: ShieldAlert, programming: Code2, "ai-data": BrainCircuit } as const;
+
+/** Three cards: an icon, the area, and one short line of what it covers. */
 export function Skills() {
   return (
     <Section id="skills" title="Skills">
-      <div className="grid gap-3">
-        {skills.map((group) => (
-          <section key={group.id} aria-labelledby={`skill-${group.id}`} className="rounded-2xl bg-surface p-5 ring-1 ring-line">
-            <h3 id={`skill-${group.id}`} className="font-display text-lg font-semibold tracking-[-0.01em]">
-              {group.title}
-            </h3>
-            <dl className="mt-3 divide-y divide-line">
-              {group.rows.map((row) => (
-                <div key={row.label} className="grid gap-2 py-3 first:pt-0 last:pb-0 sm:grid-cols-[9.5rem_1fr] sm:items-center">
-                  <dt className="text-sm text-muted">{row.label}</dt>
-                  <dd className="flex flex-wrap gap-2">
-                    {row.items.map((item) => (
-                      <span key={item} className="rounded-full bg-bg px-3 py-1 text-sm ring-1 ring-line">
-                        {item}
-                      </span>
-                    ))}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-        ))}
-      </div>
+      <ul className="grid gap-3 sm:grid-cols-3">
+        {skills.map((group) => {
+          const Icon = ICONS[group.id as keyof typeof ICONS];
+          return (
+            <li key={group.id} className="rounded-xl bg-surface/70 p-5 ring-1 ring-line">
+              {Icon && (
+                <span className="grid size-10 place-items-center rounded-lg bg-accent-soft text-accent">
+                  <Icon className="size-5" strokeWidth={1.75} aria-hidden />
+                </span>
+              )}
+              <h3 className="mt-5 font-display text-2xl leading-tight">{group.title}</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted">{group.items.join(" · ")}</p>
+            </li>
+          );
+        })}
+      </ul>
     </Section>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Geist, Geist_Mono, IBM_Plex_Sans_Arabic, Instrument_Serif } from "next/font/google";
 import { profile } from "@/data/profile";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
@@ -16,9 +16,11 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const serif = Instrument_Serif({
+  variable: "--font-serif",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -57,13 +59,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F5F7FB",
-  colorScheme: "light",
+  themeColor: "#13140F",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${geist.variable} ${geistMono.variable} ${bricolage.variable} ${plexArabic.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${geist.variable} ${geistMono.variable} ${serif.variable} ${plexArabic.variable}`}>
       <body className="min-h-dvh">{children}</body>
     </html>
   );

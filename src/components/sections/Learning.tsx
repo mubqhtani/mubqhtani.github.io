@@ -45,7 +45,7 @@ export function Learning() {
               />
               <div className={cn("min-w-0", hasMedia && "lg:grid lg:grid-cols-[1fr_24rem] lg:gap-10")}>
                 <div className="min-w-0">
-                  <p className="tabular text-sm text-muted">
+                  <p className="tabular font-mono text-[13px] text-muted">
                     <Dates entry={entry} />
                     {ongoing && <span className="badge ms-3 h-6 min-w-0 text-xs">Now</span>}
                   </p>

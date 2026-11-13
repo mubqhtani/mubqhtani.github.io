@@ -121,7 +121,7 @@ export type Certification = {
 export type SkillGroup = {
   id: string;
   title: string;
-  rows: { label: string; items: string[] }[];
+  items: string[];
 };
 
 export type Project = {
